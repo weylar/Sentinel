@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MobileDoctor</string>
+    <string name="app_name">Sentinel</string>
     <string name="pass">Yes</string>
     <string name="fail">No</string>
     <string name="touchscreen">Touch any part of the screen to confirm if its working or not, phone vibrates if positive and not if otherwise</string>
