@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_background"
+    android:weightSum="10"
+    tools:context=".HealthCheck.Battery.TestBattery">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="8"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mic_dialog"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:layout_margin="25dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_background_red"
+                android:src="@drawable/mic_50px" />
+
+            <TextView
+                android:id="@+id/explain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:text="@string/earphone_details_dialog"
+                android:textAlignment="center"/>
+
+
+
+            <TextView
+                android:id="@+id/insertEarpiece"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/pass"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/label_background"
+                    android:drawableStart="@drawable/pass_white_50px"
+                    android:drawablePadding="5dp"
+                    android:paddingStart="0dp"
+                    android:paddingTop="2dp"
+                    android:onClick="passAction"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:text="@string/pass_btn"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/fail"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/label_background_red"
+                    android:drawableStart="@drawable/no_white_50px"
+                    android:drawablePadding="5dp"
+                    android:paddingStart="0dp"
+                    android:paddingTop="2dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="2dp"
+                    android:onClick="failAction"
+                    android:text="@string/fail_btn"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:background="@drawable/label_background"
+                android:drawableStart="@drawable/continue_50px"
+                android:drawablePadding="5dp"
+                android:paddingStart="0dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="10dp"
+                android:visibility="gone"
+                android:paddingBottom="2dp"
+                android:text="@string/start"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:text="@string/skip"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

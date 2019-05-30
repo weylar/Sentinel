@@ -5,6 +5,7 @@
     <!-- Vibration Permission -->
     <uses-permission android:name="android.permission.VIBRATE" /> <!-- Network permission -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Bluetooth permission -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -26,58 +27,190 @@
 
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".TestTouch" />
-        <activity android:name=".TestPower"
-            android:label="Power Button"/>
-        <activity android:name=".TestVolume"
-            android:label="Volume Button"/>
-        <activity android:name=".TestHomeButton"
-            android:label="Home Button"/>
-        <activity android:name=".TestHeadphoneJack"
-            android:label="Headphone Jack"/>
-        <activity android:name=".TestStorage"
-            android:label="Storage"/>
-        <activity android:name=".TestMemory"
-            android:label="Memory"/>
-        <activity android:name=".TestVibration"
-            android:label="Vibration"/>
-        <activity android:name=".TestSpecification"
-            android:label="Device Specification"/>
-        <activity android:name=".TestCellular"
-            android:label="Cellular Network"/>
-        <activity android:name=".TestWIFI"
-            android:label="WIFI"/>
-        <activity android:name=".TestBluetooth"
-            android:label="Bluetooth"/>
-        <activity android:name=".TestDimming"
-            android:label="Dimming"/>
-        <activity android:name=".TestCharging"
-            android:label="Charging Port"/>
-        <activity android:name=".TestBattery"
-            android:label="Battery"/>
-        <activity android:name=".TestFlash"
-            android:label="Flashlight"/>
-        <activity android:name=".TestCamera"
-            android:label="Camera"/>
-        <activity android:name=".MainActivity"
-            android:label="@string/app_name">
+        <activity
+            android:name=".HealthCheck.HealthCheck"
+            android:configChanges="orientation"
+            android:label="Health Check"
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashScreen"
+            android:configChanges="orientation"
+            android:noHistory="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".HealthCheck.Audio.TestMicrophone"
+            android:configChanges="orientation"
+            android:label="Microphone"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Audio.TestReceiver"
+            android:configChanges="orientation"
+            android:label="Receiver"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Audio.TestSpeaker"
+            android:configChanges="orientation"
+            android:label="Speaker"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Audio.TestEarphone"
+            android:label="Earphone" />
+        <activity
+            android:name=".HealthCheck.Sensor.TestCompass"
+            android:configChanges="orientation"
+            android:label="Compass"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Sensor.TestSensor"
+            android:configChanges="orientation"
+            android:label="Sensor"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Camera.PrimaryCamEntry"
+            android:configChanges="orientation"
+            android:label="Primary Camera"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Camera.SecondaryCameraEntry"
+            android:configChanges="orientation"
+            android:label="Secondary Camera"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Display.DisplayEntry"
+            android:configChanges="orientation"
+            android:label="Display"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Display.TouchscreenEntry"
+            android:configChanges="orientation"
+            android:label="Touchscreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Display.MulitouchEntry"
+            android:configChanges="orientation"
+            android:label="Multitouch"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Display.TestDisplay"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Display.TestMultitouch"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Value"
+            android:configChanges="orientation"
+            android:label="Value of Device"
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Profile"
+            android:configChanges="orientation"
+            android:label="Profile"
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Registration"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Login"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Home"
+            android:configChanges="orientation"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <receiver android:name=".TestBattery$isCharging"/>
-        <receiver android:name=".TestCellular$NetworkChangeReceiver"/>
-        <receiver android:name=".TestHeadphoneJack$HeadsetStateReceiver">
+        <activity
+            android:name=".HealthCheck.Display.TestTouch"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Buttons.TestPower"
+            android:configChanges="orientation"
+            android:label="Power Button"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Buttons.TestVolume"
+            android:configChanges="orientation"
+            android:label="Volume Button"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Buttons.TestHomeButton"
+            android:configChanges="orientation"
+            android:label="Home Button"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Connectivity.TestHeadphoneJack"
+            android:configChanges="orientation"
+            android:label="Headphone Jack"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".HealthCheck.Audio.TestVibration"
+            android:configChanges="orientation"
+            android:label="Vibration"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".HealthCheck.Connectivity.TestCellular"
+            android:configChanges="orientation"
+            android:label="Cellular Network"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Connectivity.TestWIFI"
+            android:configChanges="orientation"
+            android:label="WIFI"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Connectivity.TestBluetooth"
+            android:configChanges="orientation"
+            android:label="Bluetooth"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Display.TestDimming"
+            android:configChanges="orientation"
+            android:label="Dimming"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Connectivity.TestCharging"
+            android:configChanges="orientation"
+            android:label="Charging Port"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Battery.TestBattery"
+            android:configChanges="orientation"
+            android:label="Battery Health"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HealthCheck.Camera.TestFlash"
+            android:configChanges="orientation"
+            android:label="Flashlight"
+            android:screenOrientation="portrait" />
+
+
+        <receiver android:name=".HealthCheck.Battery.TestBattery$isCharging" />
+        <receiver android:name=".HealthCheck.Connectivity.TestCellular$NetworkChangeReceiver" />
+        <receiver android:name=".HealthCheck.Connectivity.TestHeadphoneJack$HeadsetStateReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.HEADSET_PLUG" />
             </intent-filter>

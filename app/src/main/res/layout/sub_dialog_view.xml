@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:padding="10dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subscription Active"
+            android:textColor="@color/white"
+            android:layout_marginBottom="15dp"
+            android:textSize="25sp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:src="@drawable/active"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subscription Expires - 27 Feb, 2020"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Active Services"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
+            android:textSize="15sp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Insurance"
+            android:drawableStart="@drawable/ic_linear_scale_black_24dp"
+            android:drawableEnd="@drawable/ic_linear_scale_black_24dp"
+            android:drawablePadding="5dp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trade In/Upgrade"
+            android:drawableStart="@drawable/ic_linear_scale_black_24dp"
+            android:drawableEnd="@drawable/ic_linear_scale_black_24dp"
+            android:drawablePadding="5dp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Health Check"
+            android:drawableStart="@drawable/ic_linear_scale_black_24dp"
+            android:drawableEnd="@drawable/ic_linear_scale_black_24dp"
+            android:drawablePadding="5dp"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+

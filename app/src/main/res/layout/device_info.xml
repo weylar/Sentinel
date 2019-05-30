@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/label_background_red"
+            android:padding="5dp"
+            android:text="@string/general_info"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/specification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            tools:text="@string/general_info" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/label_background_red"
+            android:padding="5dp"
+            android:text="@string/power"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/battery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/battery_50px"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            tools:text="Battery Health"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/label_background_red"
+            android:padding="5dp"
+            android:text="@string/storage"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/file_50px"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:text="@string/storage"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <ProgressBar
+            android:id="@+id/progressStorage"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
+        <RelativeLayout
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/available"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                tools:text="28 GB Used" />
+
+            <TextView
+                android:id="@+id/size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="10dp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                tools:text="32 GB Available" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/label_background_red"
+            android:padding="5dp"
+            android:text="@string/memory"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/ram"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                tools:text="@string/general_info" />
+
+            <ImageView
+                android:id="@+id/imgRam"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/item_description"
+                tools:src="@drawable/passed"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/processor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                tools:text="@string/general_info" />
+
+            <ImageView
+                android:id="@+id/imgProcessor"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/item_description"
+                tools:src="@drawable/passed"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:id="@+id/memClass"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                tools:text="@string/general_info" />
+
+            <ImageView
+                android:id="@+id/imgMemClass"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/item_description"
+                tools:src="@drawable/passed"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="50dp"
+    android:padding="10dp">
+
+
+    <ImageView
+        android:id="@+id/imageChild"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="25dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/round_background_red"
+        android:contentDescription="@string/item_description"
+        android:src="@drawable/connectivity_100px" />
+
+    <TextView
+        android:id="@+id/titleChild"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@id/imageChild"
+        android:textColor="@color/black"
+        tools:text="Battery Health" />
+
+
+    <ImageView
+        android:id="@+id/status"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        tools:src="@drawable/passed"
+        android:layout_marginEnd="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>

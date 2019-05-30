@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".Value">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/device_valuation_results"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_margin="20dp"/>
+
+    <com.github.lzyzsd.circleprogress.DonutProgress
+        android:id="@+id/progress"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_margin="20dp"
+        app:donut_finished_color="@color/colorPrimary"
+        app:donut_text_color="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/qualify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="18sp"
+        tools:text="@string/qualified_for_trade_in"
+        android:textColor="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        tools:text="Device Value is N 21,850.00"
+        android:textColor="@color/colorPrimary"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:text="@string/trade_in_or_upgrade_now"
+        android:layout_margin="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="*Prices may vary after physical inspection of device"
+        android:textStyle="italic"
+        android:textColor="@color/black"/>
+
+
+
+</LinearLayout>

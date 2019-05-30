@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_check_health"
+            android:icon="@drawable/health"
+            android:title="@string/check_device_status"/>
+        <item
+            android:id="@+id/nav_claim"
+            android:icon="@drawable/claim"
+            android:title="@string/menu_claim" />
+        <item
+            android:id="@+id/nav_trade"
+            android:icon="@drawable/trade"
+            android:title="@string/trade_in_upgrade" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/profile"
+            android:title="@string/menu_profile" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/about"
+            android:title="@string/about_sentinel" />
+        <item
+            android:id="@+id/nav_contact"
+            android:icon="@drawable/contact"
+            android:title="@string/menu_contact" />
+        <item
+            android:id="@+id/nav_faq"
+            android:icon="@drawable/faq"
+            android:title="@string/faq" />
+        <item
+            android:id="@+id/nav_terms_conditions"
+            android:icon="@drawable/terms"
+            android:title="@string/terms_and_conditions" />
+    </group>
+
+
+
+
+
+</menu>

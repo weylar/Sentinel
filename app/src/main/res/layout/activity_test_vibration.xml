@@ -4,32 +4,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:weightSum="3"
-    tools:context=".TestFlash">
+    android:orientation="vertical"
+    android:background="@drawable/gradient_background"
+    android:weightSum="10"
+    tools:context=".HealthCheck.Battery.TestBattery">
 
-    <Button
-        android:id="@+id/vibrate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="vibrate"
-        android:text="Vibrate"/>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="8"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="15dp">
 
-    <Button
-        android:id="@+id/pass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="Pass"
-        android:text="@string/pass"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/vibrate_dialog"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:layout_margin="25dp"/>
 
-    <Button
-        android:id="@+id/fail"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_background_red"
+                android:src="@drawable/vibrate_50px" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:text="@string/vibrate_dialog_detail"
+                android:textAlignment="center"/>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="Fail"
-        android:text="@string/fail"/>
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/pass"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:background="@drawable/label_background"
+                android:drawableStart="@drawable/pass_white_50px"
+                android:drawablePadding="5dp"
+                android:paddingStart="0dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="2dp"
+                android:text="@string/pass_btn"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/fail"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:background="@drawable/label_background_red"
+                android:drawableStart="@drawable/no_white_50px"
+                android:drawablePadding="5dp"
+                android:paddingStart="0dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="2dp"
+                android:text="@string/fail_btn"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:text="@string/skip"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>

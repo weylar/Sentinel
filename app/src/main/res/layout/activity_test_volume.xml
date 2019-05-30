@@ -4,13 +4,127 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TestVolume">
+    android:orientation="vertical"
+    android:background="@drawable/gradient_background"
+    android:weightSum="10"
+    tools:context=".HealthCheck.Battery.TestBattery">
 
-    <TextView
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_weight="8"
+        app:cardElevation="5dp"
+        app:cardCornerRadius="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/volume_dialog"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:layout_margin="25dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round_background_red"
+                android:src="@drawable/volume_50px" />
+
+            <TextView
+                android:id="@+id/explain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/black"
+                android:text="@string/volume_dialog_details"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:id="@+id/volumeUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/volume_up_pressed"
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/volumeDown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/volume_down_pressed"
+                android:textAlignment="center"
+                android:visibility="gone"
+                android:textColor="@color/black" />
+
+
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:textColor="@color/green"
+                android:layout_marginTop="20dp"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                tools:text="Pass" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_margin="20dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_margin="10dp"
-        android:text="Press volume up and volume down key to confirm"/>
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:background="@drawable/label_background"
+            android:drawableStart="@drawable/continue_50px"
+            android:drawablePadding="5dp"
+            android:paddingStart="0dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="10dp"
+            android:visibility="gone"
+            android:paddingBottom="2dp"
+            android:text="@string/start"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:text="@string/skip"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>
