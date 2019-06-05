@@ -149,6 +149,7 @@ public class TestHomeButton extends AppCompatActivity {
             }
         });
         progressBar.setVisibility(View.GONE);
+        handler.removeCallbacks(timerTask);
     }
 
     private void setFail() {

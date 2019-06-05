@@ -1,129 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/gradient_background"
-    android:weightSum="10"
-    tools:context=".HealthCheck.Battery.TestBattery">
+    android:background="@drawable/gradient_background">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:layout_weight="9"
+        android:layout_centerInParent="true"
         app:cardCornerRadius="15dp"
         app:cardElevation="5dp">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:gravity="center_horizontal"
-            android:text="@string/sensor_dialog"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_background_red"
-                android:src="@drawable/sensor_50px" />
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/sensor_dialog_detail"
-                android:textAlignment="center"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/sensor_state"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:visibility="gone"
-                android:textAlignment="center"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/sensor_state_reading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:visibility="gone"
-                android:textAlignment="center"
-                android:textColor="@color/black" />
-
-
-            <TextView
-                android:id="@+id/result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textColor="@color/green"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                tools:text="Pass" />
-
-            <ProgressBar
-                android:id="@+id/progress"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:id="@+id/dialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp" />
+                android:layout_margin="25dp"
+                android:gravity="center_horizontal"
+                android:text="@string/sensor_dialog"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_below="@+id/dialog"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/item_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_background_red"
+                    android:src="@drawable/sensor_50px" />
+
+                <TextView
+                    android:id="@+id/detail"
+                    android:layout_below="@id/image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/sensor_dialog_detail"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/sensor_state"
+                    android:layout_below="@id/detail"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:visibility="gone"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/sensor_state_reading"
+                    android:layout_below="@id/sensor_state"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:visibility="gone"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+
+                <TextView
+                    android:id="@+id/result"
+                    android:layout_below="@id/sensor_state_reading"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/green"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    tools:text="Pass" />
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/progress"
+                android:layout_below="@id/result"
+                android:layout_margin="10dp"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
+
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/start_skip"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/move"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
             android:background="@drawable/label_background"
             android:drawableStart="@drawable/continue_50px"
             android:drawablePadding="5dp"
-
             android:paddingStart="0dp"
             android:paddingTop="2dp"
             android:paddingEnd="10dp"
-            android:visibility="gone"
             android:paddingBottom="2dp"
-            android:text="continue"
+            android:text="Continue"
+            android:visibility="gone"
             android:textColor="@color/white" />
 
-        <TextView
+        <Button
             android:id="@+id/skip"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:textSize="20sp"
-            android:text="@string/skip"/>
+            android:layout_margin="5dp"
+            android:background="@drawable/label_background_grey"
+            android:paddingStart="0dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="2dp"
+            android:text="@string/skip"
+            android:textColor="@color/black" />
 
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

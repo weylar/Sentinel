@@ -107,7 +107,7 @@ public class TestDimming extends AppCompatActivity {
         timerTask = new Runnable() {
             @Override
             public void run() {
-                if (val == 100) {
+                if (val > 100) {
                     val = 0;
                     dim(val);
                 } else {

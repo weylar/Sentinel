@@ -25,7 +25,7 @@ import static com.android.mobiledoctor.HealthCheck.TestFragment.setDefaults;
 public class TestSpeaker extends AppCompatActivity {
     TextView result, skip, insertEarpiece, explain;
     Button start;
-    LinearLayout linearLayout;
+    LinearLayout pass_fail, skip_start;
     MediaPlayer mp;
     HeadsetStateReceiver receiver;
 
@@ -36,7 +36,8 @@ public class TestSpeaker extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         skip = findViewById(R.id.skip);
-        linearLayout = findViewById(R.id.linear);
+        pass_fail = findViewById(R.id.linear);
+        skip_start = findViewById(R.id.start_skip);
         explain = findViewById(R.id.explain);
         insertEarpiece = findViewById(R.id.insertEarpiece);
         start = findViewById(R.id.button);
@@ -87,6 +88,11 @@ public class TestSpeaker extends AppCompatActivity {
     }
 
     private void warnRemoveHeadphone() {
+        pass_fail.setVisibility(View.GONE);
+        skip_start.setVisibility(View.VISIBLE);
+        if (mp.isPlaying()) {
+            mp.pause();
+        }
         insertEarpiece.setVisibility(View.VISIBLE);
         insertEarpiece.setText(getResources().getString(R.string.remove_headphone));
         start.setVisibility(View.GONE);
@@ -97,7 +103,8 @@ public class TestSpeaker extends AppCompatActivity {
     private void startPlayback() {
         mp.start();
         explain.setText(getResources().getString(R.string.now_playing));
-        linearLayout.setVisibility(View.VISIBLE);
+        pass_fail.setVisibility(View.VISIBLE);
+        skip_start.setVisibility(View.GONE);
         start.setVisibility(View.GONE);
         explain.setVisibility(View.VISIBLE);
         insertEarpiece.setVisibility(View.GONE);
@@ -121,6 +128,9 @@ public class TestSpeaker extends AppCompatActivity {
                 int headSetState = intent.getIntExtra("state", 0);
                 if (headSetState == 0) {
                     start.setVisibility(View.VISIBLE);
+                    explain.setVisibility(View.VISIBLE);
+                    insertEarpiece.setVisibility(View.GONE);
+                    explain.setText(getResources().getString(R.string.earphone_details_dialog));
                     start.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

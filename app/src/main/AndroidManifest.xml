@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.android.mobiledoctor">
     <!-- Vibration Permission -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.VIBRATE" /> <!-- Network permission -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- Network permission -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -27,7 +29,6 @@
 
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/app_logo"
@@ -36,6 +37,40 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Setting"
+            android:label="Settings"
+            android:parentActivityName=".Home"/>
+        <activity
+            android:name=".HealthCheck.Sensor.TestFingerPrint"
+            android:label="Fingerprint" />
+        <activity
+            android:name=".DataBackup"
+            android:label="Data Backup"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".Tac"
+            android:label="Terms and Conditions"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".Faq"
+            android:label="FAQ"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".Contact"
+            android:label="Contact Us"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".About"
+            android:label="About"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".Trade"
+            android:label="Trade In/Upgrade"
+            android:parentActivityName=".Home" />
+        <activity
+            android:name=".Claim"
+            android:label="Claim"
+            android:parentActivityName=".Home" />
         <activity
             android:name=".HealthCheck.HealthCheck"
             android:configChanges="orientation"
@@ -49,6 +84,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -139,7 +175,6 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".HealthCheck.Display.TestTouch"
             android:configChanges="orientation"
@@ -164,13 +199,11 @@
             android:configChanges="orientation"
             android:label="Headphone Jack"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".HealthCheck.Audio.TestVibration"
             android:configChanges="orientation"
             android:label="Vibration"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".HealthCheck.Connectivity.TestCellular"
             android:configChanges="orientation"
@@ -206,7 +239,6 @@
             android:configChanges="orientation"
             android:label="Flashlight"
             android:screenOrientation="portrait" />
-
 
         <receiver android:name=".HealthCheck.Battery.TestBattery$isCharging" />
         <receiver android:name=".HealthCheck.Connectivity.TestCellular$NetworkChangeReceiver" />

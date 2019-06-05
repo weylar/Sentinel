@@ -52,7 +52,7 @@ public class PrimaryCamEntry extends AppCompatActivity {
         btn = findViewById(R.id.button);
         pass = findViewById(R.id.pass);
         fail = findViewById(R.id.fail);
-        responseKeys = findViewById(R.id.responceKeys);
+        responseKeys = findViewById(R.id.responseKeys);
         explanation = findViewById(R.id.explain);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

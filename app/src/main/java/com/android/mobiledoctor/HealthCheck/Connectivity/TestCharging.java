@@ -175,6 +175,8 @@ public class TestCharging extends AppCompatActivity {
 
     private void updateNotCharging() {
         isCharging.setVisibility(View.VISIBLE);
+        skip.setVisibility(View.VISIBLE);
+        move.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
         isCharging.setText("Charger Connection Status - Not Charging\n\n Please connect your charger!");
         isUsbCharging.setVisibility(View.GONE);

@@ -3,10 +3,10 @@ package com.android.mobiledoctor.HealthCheck.Audio;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +26,8 @@ public class TestVibration extends AppCompatActivity {
     TextView skip;
     Context context = this;
     Vibrator v;
+    Thread thread;
+    boolean isRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +66,38 @@ public class TestVibration extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        v.cancel();
+        isRunning = false;
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        vibrate();
+        runThread(1000);
     }
 
+    public void runThread(final long millisec) {
+        isRunning = true;
+        thread = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                while (isRunning) {
+                    vibrate();
+                    try {
+                        sleep(millisec);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        };
+        thread.start();
+
+
+
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -94,10 +119,11 @@ public class TestVibration extends AppCompatActivity {
 
     private void vibrate() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            v.vibrate(VibrationEffect.createOneShot(20000000, VibrationEffect.DEFAULT_AMPLITUDE));
+            v.vibrate(VibrationEffect.createOneShot(2000, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
             //deprecated in API 26
-            v.vibrate(20000000);
+            v.vibrate(2000);
+
         }
     }
 }

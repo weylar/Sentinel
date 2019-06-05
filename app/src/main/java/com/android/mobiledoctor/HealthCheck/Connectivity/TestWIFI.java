@@ -53,6 +53,9 @@ public class TestWIFI extends AppCompatActivity {
     TextView result, wifiStatus, listStatus, skip;
     Button move;
     ProgressBar progressBar, progressSearch;
+    Runnable timerTask;
+    Handler handler;
+
     private static final int MY_PERMISSIONS_REQUEST_COURSE_LOCATION = 1;
 
     @Override
@@ -110,6 +113,7 @@ public class TestWIFI extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        handler = new Handler();
         mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         registerReceiver(mWifiScanReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         mWifiManager.setWifiEnabled(true);
@@ -144,14 +148,12 @@ public class TestWIFI extends AppCompatActivity {
     }
 
     private void timer(long delayMillis, final Context context) {
-        Runnable timerTask = new Runnable() {
+         timerTask = new Runnable() {
             @Override
             public void run() {
                 setFail(context);
             }
         };
-
-        Handler handler = new Handler();
         handler.postDelayed(timerTask, delayMillis);
     }
 
@@ -298,19 +300,8 @@ public class TestWIFI extends AppCompatActivity {
                               wifiManager.enableNetwork(b.networkId, true);
                               wifiManager.reconnect();
 
-                              result.setText("PASS");
-                              result.setTextColor(getResources().getColor(R.color.green));
-                              progressSearch.setVisibility(View.GONE);
-                              progressBar.setVisibility(View.GONE);
-                              setDefaults(WIFI, SUCCESS, context);
-                              skip.setVisibility(View.GONE);
-                              move.setVisibility(View.VISIBLE);
-                              move.setOnClickListener(new View.OnClickListener() {
-                                  @Override
-                                  public void onClick(View view) {
-                                      finish();
-                                  }
-                              });
+                              setPass();
+
 
                               break;
                           }
@@ -320,6 +311,23 @@ public class TestWIFI extends AppCompatActivity {
             }
         }
     };
+
+    private void setPass() {
+        result.setText("PASS");
+        result.setTextColor(getResources().getColor(R.color.green));
+        progressSearch.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        setDefaults(WIFI, SUCCESS, context);
+        skip.setVisibility(View.GONE);
+        move.setVisibility(View.VISIBLE);
+        move.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        handler.removeCallbacks(timerTask);
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -332,6 +340,7 @@ public class TestWIFI extends AppCompatActivity {
                     mWifiManager.startScan();
                 } else {
                     Toast.makeText(context, "Permission was denied ", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
                 break;
 

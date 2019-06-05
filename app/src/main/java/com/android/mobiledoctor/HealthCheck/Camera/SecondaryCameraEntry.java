@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.hardware.Camera;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -23,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.mobiledoctor.HealthCheck.HealthCheck;
-import com.android.mobiledoctor.HealthCheck.TestFragment;
 import com.android.mobiledoctor.R;
 
 import static com.android.mobiledoctor.HealthCheck.TestFragment.FAILED;
@@ -56,7 +54,7 @@ public class SecondaryCameraEntry extends AppCompatActivity {
         btn = findViewById(R.id.button);
         pass = findViewById(R.id.pass);
         fail = findViewById(R.id.fail);
-        responseKeys = findViewById(R.id.responceKeys);
+        responseKeys = findViewById(R.id.responseKeys);
         explanation = findViewById(R.id.explain);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

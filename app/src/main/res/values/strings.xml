@@ -44,7 +44,7 @@
     <string name="device_valuation_results">Device Valuation Results</string>
     <string name="qualified_for_trade_in">Qualified for Trade-in</string>
     <string name="trade_in_or_upgrade_now">Trade in or Upgrade Now</string>
-    <string name="multitouch_detect_text">Touch the screen with two or more finger to detect if it vibrates.</string>
+    <string name="multitouch_detect_text">Touch the screen with two or more fingers to detect if device vibrates.\nMake sure device is not on Power Saver Mode</string>
     <string name="item_description">item_description</string>
     <string name="batter_dialog">Checking the battery health.</string>
     <string name="wifi_dialog">Checking the WI-FI hardware is functional.</string>
@@ -64,24 +64,27 @@
     <string name="did_you_feel">Did you feel vibration when you multi touched the screen?</string>
     <string name="touch_dialog">Test the touchscreen functionality works properly.</string>
     <string name="touch_details">Did it all pixels respond to touch?</string>
+    <string name="permission_details">You need to enable all required permissions, click go to settings to proceed</string>
     <string name="touch_heading">Touchscreen</string>
+    <string name="permission_heading">Permission</string>
     <string name="display_dialog">Check the display for missing pixels.</string>
     <string name="earphone_dialog">Checks that the earphone is functional.</string>
     <string name="speaker_dialog">Checks that the main speaker is functional.</string>
     <string name="mic_dialog">Checks that the device microphone is functional.</string>
     <string name="receiver_dialog">Checks that the receiver speaker is functional.</string>
-    <string name="display_details_dialog">This test shows a series of colored screens. Tap on the screen to go through the different screens.</string>
     <string name="earphone_details_dialog">Press start when you are ready.</string>
     <string name="display_header">Display</string>
     <string name="display_details">Did you see series of coloured screen?</string>
     <string name="backlight_dialog">Tests that the backlight level changes.</string>
     <string name="vibrate_dialog">Tests that the device vibration is functional.</string>
-    <string name="vibrate_dialog_detail">Phone will vibrate until the end of test.</string>
+    <string name="vibrate_dialog_detail">Phone will vibrate until the end of test. For effective result, make sure device is not on power saver mode.</string>
     <string name="diim_dialog_details">If the brightness level changes press Pass, otherwise press Fail.</string>
     <string name="fail_btn">Fail</string>
     <string name="pass_btn">Pass</string>
     <string name="home_dialog">Tests that the home button is functional</string>
+    <string name="fingerprint_dialog">Tests that the fingerprint hardware is functional</string>
     <string name="home_dialog_details">Press the home button. The app should close. Relaunch the application by pressing the app icon or by using task manager.</string>
+    <string name="fingerprint_dialog_details">Place your finger on the fingerprint sensor for recognition. Ensure that your device lock screen is activated and finger has already been registered on the device</string>
     <string name="volume_dialog">Checks that the audio control is functional.</string>
     <string name="volume_dialog_details">Press the volume up and volume down buttons individually.</string>
     <string name="volume_up_pressed">Volume Up pressed</string>
@@ -92,13 +95,13 @@
     <string name="back_cam_dialog">Tests that the back camera is functional.</string>
     <string name="front_cam_dialog_details">Test the front camera. You will be redirected to take a picture, if you see what you snap, tap on pass, otherwise tap fail</string>
     <string name="back_cam_dialog_details">Test the back camera. You will be redirected to take a picture, if you see what you snap, tap on pass, otherwise tap fail</string>
-    <string name="flashlight_dialog_detial">Verify if the flash LED for the camera is on.</string>
-    <string name="netwrok_dialog_detail">Test will pass once cellular network is detected.</string>
-    <string name="headphone_dialog_detail">Test will pass once headphone (earphone) is inserted.</string>
+    <string name="flashlight_dialog_detail">Verify if the flash LED for the camera is on.</string>
+    <string name="network_dialog_detail">Test will pass once cellular network is detected.</string>
+    <string name="headphone_dialog_detail">Test will pass once headphone (earphone) is detected.</string>
     <string name="charging_dialog_detail">Test will pass once charger is detected.</string>
     <string name="sensor_dialog_detail">To detect proximity, cover the upper part of your device or pretend to answer a call.</string>
     <string name="compass_dialog_detail">Rotate device in all axis and check the degree and radian angle update. If it detects changes, press pass, otherwise press fail.</string>
-    <string name="bluetooth_dialog_detail">Test will pass once bluetooth devices are found.</string>
+    <string name="bluetooth_dialog_detail">Test will pass once a bluetooth device is found.</string>
     <string name="wifi_dialog_detail">Test will pass once WI-FI network is detected and connected.</string>
     <string name="insert_headphone">No headphone detected, please insert headphone.</string>
     <string name="remove_headphone">Please remove earphone.</string>
@@ -109,5 +112,9 @@
     <string name="storage">Storage</string>
     <string name="memory">Memory</string>
     <string name="power">Power</string>
+    <string name="phone_state">Phone State</string>
+    <string name="not_support_fingerprint">Your device doesn\'t support fingerprint authentication</string>
+    <string name="enable_lock">Please enable lock screen security in your device\'s settings to proceed.</string>
+    <string name="no_finger_registered">No fingerprint configured. Please register at least one fingerprint in your device\'s Settings</string>
 
 </resources>

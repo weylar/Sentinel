@@ -1,24 +1,33 @@
 package com.android.mobiledoctor.HealthCheck;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StatFs;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.mobiledoctor.R;
+
 import java.io.File;
+
 import static com.android.mobiledoctor.HealthCheck.TestFragment.BATTERY;
 import static com.android.mobiledoctor.HealthCheck.TestFragment.FAILED;
 import static com.android.mobiledoctor.HealthCheck.TestFragment.SUCCESS;
@@ -27,7 +36,10 @@ import static com.android.mobiledoctor.HealthCheck.TestFragment.setDefaults;
 import static java.util.jar.Pack200.Packer.ERROR;
 
 public class DeviceInfoFragment extends Fragment {
+    private static final int MY_PERMISSIONS_REQUEST_PHONE = 1;
     TextView battHealth;
+    View view;
+    TextView phoneState;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,11 +48,13 @@ public class DeviceInfoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.device_info, container, false);
+        view = inflater.inflate(R.layout.device_info, container, false);
+        phoneState = view.findViewById(R.id.phone_state);
         showSpecification(view);
         showStorage(view);
         showMemory(view);
         showBattery(view);
+        getPhoneState(view);
 
         return view;
     }
@@ -174,27 +188,72 @@ public class DeviceInfoFragment extends Fragment {
 
     }
 
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_PHONE: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getPhoneState(view);
+                } else {
+                    Toast.makeText(getActivity(), "Permission was denied ", Toast.LENGTH_SHORT).show();
+                    //getActivity().finish();
+                }
+                return;
+            }
+        }
+    }
+
+    private void getPhoneState(View view) {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_PHONE_STATE}, MY_PERMISSIONS_REQUEST_PHONE);
+        } else {
+            String phoneTypeString = "";
+            TelephonyManager telephonyManager = (TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+            int phoneType = telephonyManager.getPhoneType();
+            switch (phoneType) {
+                case (TelephonyManager.PHONE_TYPE_CDMA):
+                    phoneTypeString = "CDMA";
+                    break;
+                case (TelephonyManager.PHONE_TYPE_GSM):
+                    phoneTypeString = "GSM";
+                    break;
+                case (TelephonyManager.PHONE_TYPE_NONE):
+                    phoneTypeString = "NONE";
+                    break;
+            }
+            boolean isRoaming = telephonyManager.isNetworkRoaming();
+            phoneState.append("Phone Network Type: " + phoneTypeString +  "\n");
+            phoneState.append("IMEI Number: " + telephonyManager.getDeviceId() +  "\n");
+            phoneState.append("Subscriber ID: " + telephonyManager.getDeviceId() +  "\n");
+            phoneState.append("Sim Serial Number: " + telephonyManager.getSimSerialNumber() +  "\n");
+            phoneState.append("Network Country ISO: " + telephonyManager.getNetworkCountryIso() +  "\n");
+            phoneState.append("Sim Country ISO: " + telephonyManager.getSimCountryIso() +  "\n");
+            phoneState.append("Voice Mail Number: " + telephonyManager.getVoiceMailNumber() +  "\n");
+            phoneState.append("In Roaming: " + isRoaming);
+
+        }
+    }
+
+
     private void showStorage(View view) {
         ProgressBar progressBar = view.findViewById(R.id.progressStorage);
         TextView textViewSize = view.findViewById(R.id.size);
         TextView textViewAvailable = view.findViewById(R.id.available);
         StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
         Long bytesAvailable = stat.getBlockSizeLong() * stat.getAvailableBlocksLong();
-        long megAvailable = bytesAvailable / (1024 * 1024);
-        megAvailable /= 1024;
-        textViewAvailable.setText(megAvailable + " GB Available");
-        textViewSize.setText("Total size: " + getTotalInternalMemorySize());
+        long megAvailable = bytesAvailable;
+        textViewAvailable.setText("Avail: " + formatSize(megAvailable));
+        textViewSize.setText("Total: " + getTotalInternalMemorySize());
         progressBar.setMax((int) getTotalInternalMemorySizeInt());
-        progressBar.setProgress((int) getTotalInternalMemorySizeInt() - (int) megAvailable);
+        progressBar.setProgress((int) getTotalInternalMemorySizeInt() - (int) formatSizeInt(megAvailable));
 
 
     }
 
-    public static boolean isExternalMemoryAvailable() {
-        return android.os.Environment.
-                getExternalStorageState().equals(
-                android.os.Environment.MEDIA_MOUNTED);
-    }
+
 
     public static String getTotalInternalMemorySize() {
         File path = Environment.getDataDirectory();
@@ -212,18 +271,7 @@ public class DeviceInfoFragment extends Fragment {
         return formatSizeInt(TotalBlocks * BlockSize);
     }
 
-    public static String getTotalExternalMemorySize() {
-        if (isExternalMemoryAvailable()) {
-            File path = Environment.
-                    getExternalStorageDirectory();
-            StatFs stat = new StatFs(path.getPath());
-            long BlockSize = stat.getBlockSizeLong();
-            long TotalBlocks = stat.getBlockCountLong();
-            return formatSize(TotalBlocks * BlockSize);
-        } else {
-            return ERROR;
-        }
-    }
+
 
     public static long formatSizeInt(long size) {
         if (size >= 1024) {

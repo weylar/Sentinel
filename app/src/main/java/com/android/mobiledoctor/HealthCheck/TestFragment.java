@@ -13,7 +13,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.mobiledoctor.HealthCheck.Audio.TestEarphone;
 import com.android.mobiledoctor.HealthCheck.Audio.TestReceiver;
@@ -38,6 +37,7 @@ import com.android.mobiledoctor.HealthCheck.Display.TouchscreenEntry;
 import com.android.mobiledoctor.HealthCheck.Sensor.TestCompass;
 import com.android.mobiledoctor.HealthCheck.Sensor.TestSensor;
 import com.android.mobiledoctor.R;
+import com.android.mobiledoctor.HealthCheck.Sensor.TestFingerPrint;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -210,7 +210,8 @@ public class TestFragment extends Fragment {
                         Intent intentSensor = new Intent(getActivity(), TestSensor.class);
                         startActivity(intentSensor);
                     } else if (childPosition == 2) {
-
+                        Intent testFingerprint = new Intent(getActivity(), TestFingerPrint.class);
+                        startActivity(testFingerprint);
                     }
                 }
                 return true;

@@ -6,6 +6,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,8 @@ public class TestSensor extends AppCompatActivity implements SensorEventListener
     Sensor mSensor;
     SensorManager mSensorManager;
     float maxRange;
+    Runnable runnable;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +88,6 @@ public class TestSensor extends AppCompatActivity implements SensorEventListener
     @Override
     public final void onAccuracyChanged(Sensor sensor, int accuracy) {
 
-
-
     }
 
     @Override
@@ -98,12 +99,12 @@ public class TestSensor extends AppCompatActivity implements SensorEventListener
     @Override
     public final void onSensorChanged(SensorEvent event) {
         float millibarsOfProximeter = event.values[0];
-        passAction();
         sensorState.setVisibility(View.VISIBLE);
         sensorStateReading.setVisibility(View.VISIBLE);
         if (millibarsOfProximeter == 0){
            sensorState.setText("Uncover sensor.");
            sensorStateReading.setText("Proximity reading - NEAR");
+            passAction();
         }else{
             sensorState.setText("Cover sensor.");
             sensorStateReading.setText("Proximity reading - FAR");
@@ -116,9 +117,47 @@ public class TestSensor extends AppCompatActivity implements SensorEventListener
 
         if (mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY) != null){
             mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+            timer(10000);
+            runProgress();
         } else {
             failAction();
         }
+    }
+
+    private void runProgress() {
+       Thread thread = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                for (int i = 0; i <= 10; i++) {
+                    if (i > 0) {
+                        try {
+                            sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    progressBar.setMax(10);
+                    progressBar.setProgress(i);
+
+                }
+            }
+        };
+
+        thread.start();
+    }
+
+    private void timer(long delayMillis) {
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+               failAction();
+            }
+        };
+        handler = new Handler();
+        handler.postDelayed(runnable, delayMillis);
+
+
     }
 
     private void passAction() {
@@ -128,11 +167,14 @@ public class TestSensor extends AppCompatActivity implements SensorEventListener
         progressBar.setVisibility(View.GONE);
         skip.setVisibility(View.GONE);
         move.setVisibility(View.VISIBLE);
+        handler.removeCallbacks(runnable);
     }
 
     private void failAction() {
-        detail.setText("No sensor detected on device.");
+        //detail.setText("No sensor detected on device.");
         setDefaults(SENSOR, FAILED, this);
+        result.setText("FAIL");
+        result.setTextColor(getResources().getColor(R.color.colorPrimary));
         sensorState.setVisibility(View.GONE);
         sensorStateReading.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);

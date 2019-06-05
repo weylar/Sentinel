@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,47 +11,52 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_margin="20dp"
-        android:layout_weight="9"
         app:cardCornerRadius="15dp"
         app:cardElevation="5dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:gravity="center_horizontal"
-            android:text="@string/cellular_dialog"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:gravity="center_horizontal"
+                android:text="@string/cellular_dialog"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/image"
+                android:layout_below="@id/dialog"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/item_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_background_red"
                 android:src="@drawable/network_50px" />
 
             <TextView
+                android:id="@+id/explain"
+                android:layout_below="@id/image"
+                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/netwrok_dialog_detail"
+                android:layout_margin="10dp"
+                android:text="@string/network_dialog_detail"
                 android:textAlignment="center"
                 android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/reason"
+                android:layout_below="@id/explain"
+                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -62,6 +67,8 @@
 
             <TextView
                 android:id="@+id/result"
+                android:layout_below="@+id/reason"
+                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -72,19 +79,23 @@
 
             <ProgressBar
                 android:id="@+id/progress"
+                android:layout_below="@+id/result"
+                android:layout_centerHorizontal="true"
                 style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp" />
+                android:layout_margin="10dp" />
 
-        </LinearLayout>
+
+        </RelativeLayout>
+
 
     </android.support.v7.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:gravity="center_horizontal">
 
         <Button
@@ -106,4 +117,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

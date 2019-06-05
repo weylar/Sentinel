@@ -77,6 +77,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        handler = new Handler();
         IntentFilter receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         HeadsetStateReceiver receiver = new HeadsetStateReceiver();
         registerReceiver( receiver, receiverFilter );
@@ -121,7 +122,6 @@ public class TestHeadphoneJack extends AppCompatActivity {
                 failAction();
             }
         };
-        handler = new Handler();
         handler.postDelayed(timerTask, delayMillis);
     }
 

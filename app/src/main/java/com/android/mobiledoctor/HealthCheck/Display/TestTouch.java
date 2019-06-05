@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -25,7 +26,6 @@ import com.android.mobiledoctor.HealthCheck.HealthCheck;
 import com.android.mobiledoctor.R;
 
 import static com.android.mobiledoctor.HealthCheck.TestFragment.FAILED;
-import static com.android.mobiledoctor.HealthCheck.TestFragment.MULTITOUCH;
 import static com.android.mobiledoctor.HealthCheck.TestFragment.SUCCESS;
 import static com.android.mobiledoctor.HealthCheck.TestFragment.TOUCHSCREEN;
 import static com.android.mobiledoctor.HealthCheck.TestFragment.UNCHECKED;
@@ -47,6 +47,7 @@ public class TestTouch extends AppCompatActivity {
         getSupportActionBar().hide();
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
     }
 
@@ -107,7 +108,7 @@ public class TestTouch extends AppCompatActivity {
             circlePaint = new Paint();
             circlePath = new Path();
             circlePaint.setAntiAlias(true);
-            circlePaint.setColor(Color.BLUE);
+            circlePaint.setColor(Color.WHITE);
             circlePaint.setStyle(Paint.Style.FILL);
             circlePaint.setStrokeJoin(Paint.Join.MITER);
             circlePaint.setStrokeWidth(4f);

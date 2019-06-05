@@ -84,6 +84,11 @@ public class TestPower extends AppCompatActivity {
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(powerDetect, intentFilter);
         timer(10000);
+        runProgress();
+
+    }
+
+    private void runProgress() {
         thread = new Thread() {
             @Override
             public void run() {
@@ -104,12 +109,11 @@ public class TestPower extends AppCompatActivity {
         };
 
         thread.start();
-
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         unregisterReceiver(powerDetect);
         handler.removeCallbacks(timerTask);
     }
@@ -122,6 +126,7 @@ public class TestPower extends AppCompatActivity {
             }
         };
         handler.postDelayed(timerTask, delayMillis);
+
 
     }
 

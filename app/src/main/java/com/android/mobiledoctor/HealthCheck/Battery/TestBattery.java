@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.mobiledoctor.HealthCheck.HealthCheck;
-import com.android.mobiledoctor.Home;
 import com.android.mobiledoctor.R;
 
 import static com.android.mobiledoctor.HealthCheck.TestFragment.BATTERY;

@@ -1,85 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/gradient_background"
-    android:weightSum="10"
     tools:context=".HealthCheck.Battery.TestBattery">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:layout_weight="9"
         app:cardElevation="5dp"
+        android:layout_centerInParent="true"
         app:cardCornerRadius="15dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/batter_dialog"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"
-            android:layout_margin="25dp"/>
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_margin="10dp"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/batter_dialog"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+
             <ImageView
+                android:id="@+id/image"
+                android:layout_below="@+id/dialog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
                 android:background="@drawable/round_background_red"
                 android:src="@drawable/battery_100px" />
 
             <TextView
                 android:id="@+id/battPercentage"
+                android:layout_below="@+id/image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:textAlignment="center"
                 android:textColor="@color/black"
-                tools:text="Battery Percentage - "
-                android:textSize="20sp" />
+                tools:text="Battery Percentage - " />
 
 
             <TextView
                 android:id="@+id/batteryHealth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_below="@+id/battPercentage"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:textAlignment="center"
                 android:textColor="@color/black"
-                tools:text="Battery Health - "
-                android:textSize="20sp" />
+                tools:text="Battery Health - " />
 
             <TextView
                 android:id="@+id/result"
+                android:layout_below="@id/batteryHealth"
+                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="5dp"
                 android:textColor="@color/green"
                 android:textSize="40sp"
                 android:textStyle="bold"
                 tools:text="Pass" />
-        </LinearLayout>
+
+
+        </RelativeLayout>
+
 
     </android.support.v7.widget.CardView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_horizontal">
-
-        <Button
+    <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -93,9 +100,9 @@
             android:paddingEnd="10dp"
             android:paddingBottom="2dp"
             android:text="@string/move"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/white" />
 
-    </LinearLayout>
 
-
-</LinearLayout>
+</RelativeLayout>

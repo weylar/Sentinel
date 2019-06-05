@@ -25,8 +25,9 @@ import static com.android.mobiledoctor.HealthCheck.TestFragment.setDefaults;
 public class TestEarphone extends AppCompatActivity {
     TextView skip, insertEarpiece, explain;
     Button start;
-    LinearLayout linearLayout;
+    LinearLayout linearLayout, startSkip;
     MediaPlayer mp;
+    HeadsetStateReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +36,17 @@ public class TestEarphone extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         skip = findViewById(R.id.skip);
+        startSkip = findViewById(R.id.start_skip);
         linearLayout = findViewById(R.id.linear);
         explain = findViewById(R.id.explain);
         insertEarpiece = findViewById(R.id.insertEarpiece);
         start = findViewById(R.id.button);
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startPlay();
+            }
+        });
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +81,7 @@ public class TestEarphone extends AppCompatActivity {
         mp = MediaPlayer.create(TestEarphone.this, R.raw.audio_playback);
         mp.setLooping(true);
         IntentFilter receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
-        HeadsetStateReceiver receiver = new HeadsetStateReceiver();
+         receiver = new HeadsetStateReceiver();
         registerReceiver(receiver, receiverFilter);
     }
 
@@ -82,6 +90,7 @@ public class TestEarphone extends AppCompatActivity {
         super.onPause();
         mp.stop();
         mp.release();
+        unregisterReceiver(receiver);
     }
 
     public class HeadsetStateReceiver extends BroadcastReceiver {
@@ -94,15 +103,20 @@ public class TestEarphone extends AppCompatActivity {
                 if (headSetState == 0) {
                     warnNoHeadphone();
                 } else {
-                    start.setVisibility(View.VISIBLE);
                     start.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             startPlay();
                         }
                     });
-                    explain.setVisibility(View.VISIBLE);
+
                     insertEarpiece.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.GONE);
+                    startSkip.setVisibility(View.VISIBLE);
+                    explain.setVisibility(View.VISIBLE);
+                    explain.setText(getResources().getString(R.string.earphone_details_dialog));
+                    start.setVisibility(View.VISIBLE);
+
 
 
                 }
@@ -112,16 +126,22 @@ public class TestEarphone extends AppCompatActivity {
 
     private void startPlay() {
         mp.start();
-        explain.setText(getResources().getString(R.string.now_playing));
         linearLayout.setVisibility(View.VISIBLE);
-        start.setVisibility(View.GONE);
+        startSkip.setVisibility(View.GONE);
+        explain.setVisibility(View.VISIBLE);
+        explain.setText(getResources().getString(R.string.now_playing));
+
     }
 
     private void warnNoHeadphone() {
+        if (mp.isPlaying()){
+            mp.pause();
+        }
+        linearLayout.setVisibility(View.GONE);
+        startSkip.setVisibility(View.VISIBLE);
         insertEarpiece.setVisibility(View.VISIBLE);
         insertEarpiece.setText(getResources().getString(R.string.insert_headphone));
         start.setVisibility(View.GONE);
-        skip.setVisibility(View.VISIBLE);
         explain.setVisibility(View.GONE);
 
     }

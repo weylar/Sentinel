@@ -79,6 +79,11 @@ public class TestVolume extends AppCompatActivity {
         super.onResume();
         timer(10000);
 
+        runProgress();
+
+    }
+
+    private void runProgress() {
         thread = new Thread() {
             @Override
             public void run() {
@@ -97,7 +102,6 @@ public class TestVolume extends AppCompatActivity {
             }
         };
         thread.start();
-
     }
 
     @Override

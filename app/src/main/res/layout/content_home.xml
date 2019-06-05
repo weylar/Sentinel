@@ -157,6 +157,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="10dp"
+                        android:onClick="TradeIn"
                         android:contentDescription="@string/profile_image"
                         android:src="@drawable/trade_100px" />
 
@@ -237,6 +238,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="10dp"
+                        android:onClick="DataBackup"
                         android:contentDescription="@string/profile_image"
                         android:src="@drawable/backup_100px" />
 
@@ -273,6 +275,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_margin="10dp"
+                        android:onClick="Claim"
                         android:contentDescription="@string/profile_image"
                         android:src="@drawable/claim_100px" />
 

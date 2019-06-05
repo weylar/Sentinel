@@ -42,6 +42,8 @@ public class TestBluetooth extends AppCompatActivity {
     BluetoothAdapter mBluetoothAdapter;
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 1;
     Context context;
+    Runnable timerTask;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class TestBluetooth extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+         handler = new Handler();
         runProgressBar();
         timer(120000, context);
         onBluetooth();
@@ -88,14 +91,13 @@ public class TestBluetooth extends AppCompatActivity {
     }
 
     private void timer(long delayMillis, final Context context) {
-        Runnable timerTask = new Runnable() {
+        timerTask = new Runnable() {
             @Override
             public void run() {
                 setFail(context);
 
             }
         };
-        Handler handler = new Handler();
         handler.postDelayed(timerTask, delayMillis);
     }
 
@@ -251,6 +253,7 @@ public class TestBluetooth extends AppCompatActivity {
         move.setVisibility(View.VISIBLE);
         skip.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
+        handler.removeCallbacks(timerTask);
         move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
