@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.android.mobiledoctor">
+    package="com.android.sentinel">
     <!-- Vibration Permission -->
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.VIBRATE" /> <!-- Network permission -->
@@ -37,40 +37,58 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Setting"
+        <activity android:name=".Report"
+            android:label="Report"
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Support"
+            android:label="Support"
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Setting"
             android:label="Settings"
-            android:parentActivityName=".Home"/>
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".HealthCheck.Sensor.TestFingerPrint"
-            android:label="Fingerprint" />
+            android:label="Fingerprint"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".DataBackup"
             android:label="Data Backup"
-            android:parentActivityName=".Home" />
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Tac"
             android:label="Terms and Conditions"
-            android:parentActivityName=".Home" />
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Faq"
             android:label="FAQ"
-            android:parentActivityName=".Home" />
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Contact"
             android:label="Contact Us"
-            android:parentActivityName=".Home" />
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".About"
             android:label="About"
-            android:parentActivityName=".Home" />
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Trade"
             android:label="Trade In/Upgrade"
-            android:parentActivityName=".Home" />
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Claim"
             android:label="Claim"
-            android:parentActivityName=".Home" />
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".HealthCheck.HealthCheck"
             android:configChanges="orientation"
@@ -172,7 +190,7 @@
         <activity
             android:name=".Home"
             android:configChanges="orientation"
-            android:label="@string/app_name"
+            android:label="Dashboard"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

@@ -116,5 +116,10 @@
     <string name="not_support_fingerprint">Your device doesn\'t support fingerprint authentication</string>
     <string name="enable_lock">Please enable lock screen security in your device\'s settings to proceed.</string>
     <string name="no_finger_registered">No fingerprint configured. Please register at least one fingerprint in your device\'s Settings</string>
+    <string name="active_subscription">Active Subscription</string>
+    <string name="active_services">Active Services</string>
+    <string name="expire">Subscription Expire - 09 April 2020</string>
+    <string name="support">Support</string>
+    <string name="report_a_problem">Report a problem</string>
 
 </resources>

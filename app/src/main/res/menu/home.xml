@@ -7,6 +7,10 @@
         android:title="@string/help"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/sign"
+        android:title="Sign In"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/about"
         android:title="@string/about"
         app:showAsAction="never"/>
