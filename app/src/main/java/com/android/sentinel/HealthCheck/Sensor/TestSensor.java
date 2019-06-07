@@ -17,7 +17,10 @@ import android.widget.TextView;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
+import static com.android.sentinel.HealthCheck.TestFragment.CHARGING;
+import static com.android.sentinel.HealthCheck.TestFragment.COMPASS;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.SENSOR;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
@@ -54,14 +57,32 @@ public class TestSensor extends AppCompatActivity implements SensorEventListener
             @Override
             public void onClick(View view) {
                 setDefaults(SENSOR, UNCHECKED, TestSensor.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(COMPASS)) {
+                        Intent intent = new Intent(TestSensor.this, TestFingerPrint.class);
+                        intent.putExtra(FROM, SENSOR);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
 
         move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(COMPASS)) {
+                        Intent intent = new Intent(TestSensor.this, TestFingerPrint.class);
+                        intent.putExtra(FROM, SENSOR);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
     }
@@ -171,7 +192,6 @@ public class TestSensor extends AppCompatActivity implements SensorEventListener
     }
 
     private void failAction() {
-        //detail.setText("No sensor detected on device.");
         setDefaults(SENSOR, FAILED, this);
         result.setText("FAIL");
         result.setTextColor(getResources().getColor(R.color.colorPrimary));

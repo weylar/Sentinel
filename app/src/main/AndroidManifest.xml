@@ -37,58 +37,69 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Report"
+        <activity android:name=".HealthResult"
+            android:label="Device Health Result"
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Chat"
+            android:label="Chat"
+            android:parentActivityName=".Home"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Report"
             android:label="Report"
             android:parentActivityName=".Home"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Support"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Support"
             android:label="Support"
             android:parentActivityName=".Home"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Setting"
             android:label="Settings"
             android:parentActivityName=".Home"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HealthCheck.Sensor.TestFingerPrint"
             android:label="Fingerprint"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".DataBackup"
             android:label="Data Backup"
             android:parentActivityName=".Home"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Tac"
             android:label="Terms and Conditions"
             android:parentActivityName=".Home"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Faq"
             android:label="FAQ"
             android:parentActivityName=".Home"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Contact"
             android:label="Contact Us"
             android:parentActivityName=".Home"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".About"
             android:label="About"
             android:parentActivityName=".Home"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Trade"
             android:label="Trade In/Upgrade"
             android:parentActivityName=".Home"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Claim"
             android:label="Claim"
             android:parentActivityName=".Home"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".HealthCheck.HealthCheck"
             android:configChanges="orientation"

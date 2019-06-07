@@ -15,11 +15,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.sentinel.HealthCheck.Connectivity.TestCharging;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
+import static com.android.sentinel.HealthCheck.TestFragment.CHARGING;
 import static com.android.sentinel.HealthCheck.TestFragment.COMPASS;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
+import static com.android.sentinel.HealthCheck.TestFragment.HEADPHONE;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -48,8 +52,6 @@ public class TestCompass extends AppCompatActivity implements SensorEventListene
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-
-
         compassState = findViewById(R.id.compass_state);
         compassStateDetail = findViewById(R.id.compass_state_details);
         imageView = findViewById(R.id.image);
@@ -61,7 +63,16 @@ public class TestCompass extends AppCompatActivity implements SensorEventListene
             @Override
             public void onClick(View view) {
                 setDefaults(COMPASS, UNCHECKED, TestCompass.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(CHARGING)) {
+                        Intent intent = new Intent(TestCompass.this, TestSensor.class);
+                        intent.putExtra(FROM, COMPASS);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
 
@@ -142,13 +153,31 @@ public class TestCompass extends AppCompatActivity implements SensorEventListene
 
     public void passAction(View view) {
         setDefaults(COMPASS, SUCCESS, this);
-        finish();
+        if (getIntent().getExtras() != null) {
+            String val = getIntent().getStringExtra(FROM);
+            if (val.equals(CHARGING)) {
+                Intent intent = new Intent(TestCompass.this, TestSensor.class);
+                intent.putExtra(FROM, COMPASS);
+                startActivity(intent);
+            }
+        }else {
+            finish();
+        }
 
     }
 
     public void failAction(View view) {
         setDefaults(COMPASS, FAILED, this);
-        finish();
+        if (getIntent().getExtras() != null) {
+            String val = getIntent().getStringExtra(FROM);
+            if (val.equals(CHARGING)) {
+                Intent intent = new Intent(TestCompass.this, TestSensor.class);
+                intent.putExtra(FROM, COMPASS);
+                startActivity(intent);
+            }
+        }else {
+            finish();
+        }
     }
 
 

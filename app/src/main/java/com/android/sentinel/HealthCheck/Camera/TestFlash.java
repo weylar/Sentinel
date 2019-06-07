@@ -17,11 +17,16 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.sentinel.HealthCheck.Audio.TestSpeaker;
+import com.android.sentinel.HealthCheck.Display.TestDimming;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
+import static com.android.sentinel.HealthCheck.TestFragment.DIMMING;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
 import static com.android.sentinel.HealthCheck.TestFragment.FLASH;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
+import static com.android.sentinel.HealthCheck.TestFragment.SPEAKER;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -48,21 +53,48 @@ public class TestFlash extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(FLASH, SUCCESS, context);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(DIMMING)) {
+                        Intent intent = new Intent(TestFlash.this, TestSpeaker.class);
+                        intent.putExtra(FROM, FLASH);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
         fail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setDefaults(FLASH, FAILED, context);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(DIMMING)) {
+                        Intent intent = new Intent(TestFlash.this, TestSpeaker.class);
+                        intent.putExtra(FROM, FLASH);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setDefaults(FLASH, UNCHECKED, context);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(DIMMING)) {
+                        Intent intent = new Intent(TestFlash.this, TestSpeaker.class);
+                        intent.putExtra(FROM, FLASH);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
 
@@ -115,12 +147,34 @@ public class TestFlash extends AppCompatActivity {
                             cam.startPreview();
                         } else {
                             Toast.makeText(context, "Phone does not have a flash", Toast.LENGTH_LONG).show();
+                            setDefaults(FLASH, UNCHECKED, context);
+                            if (getIntent().getExtras() != null) {
+                                String val = getIntent().getStringExtra(FROM);
+                                if (val.equals(DIMMING)) {
+                                    Intent intent = new Intent(TestFlash.this, TestSpeaker.class);
+                                    intent.putExtra(FROM, FLASH);
+                                    startActivity(intent);
+                                }
+                            }else {
+                                finish();
+                            }
                         }
                     } catch (Exception e) {
                         Log.e("Error", "" + e);
                     }
                 } else {
                     Toast.makeText(context, "Permission was denied ", Toast.LENGTH_SHORT).show();
+                    setDefaults(FLASH, UNCHECKED, context);
+                    if (getIntent().getExtras() != null) {
+                        String val = getIntent().getStringExtra(FROM);
+                        if (val.equals(DIMMING)) {
+                            Intent intent = new Intent(TestFlash.this, TestSpeaker.class);
+                            intent.putExtra(FROM, FLASH);
+                            startActivity(intent);
+                        }
+                    }else {
+                        finish();
+                    }
                 }
                 return;
             }
@@ -146,6 +200,17 @@ public class TestFlash extends AppCompatActivity {
                     cam.startPreview();
                 } else {
                     Toast.makeText(context, "Phone does not have a flash", Toast.LENGTH_LONG).show();
+                    setDefaults(FLASH, UNCHECKED, context);
+                    if (getIntent().getExtras() != null) {
+                        String val = getIntent().getStringExtra(FROM);
+                        if (val.equals(DIMMING)) {
+                            Intent intent = new Intent(TestFlash.this, TestSpeaker.class);
+                            intent.putExtra(FROM, FLASH);
+                            startActivity(intent);
+                        }
+                    }else {
+                        finish();
+                    }
                 }
             } catch (Exception e) {
                 Log.e("Error", "" + e);

@@ -35,11 +35,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.sentinel.HealthCheck.HealthCheck;
+import com.android.sentinel.HealthResult;
 import com.android.sentinel.R;
 
 import java.util.List;
 
+import static com.android.sentinel.HealthCheck.TestFragment.BLUETOOTH;
+import static com.android.sentinel.HealthCheck.TestFragment.DISPLAY;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.WIFI;
@@ -50,7 +54,7 @@ public class TestWIFI extends AppCompatActivity {
     WifiManager mWifiManager;
     ListView deviceName;
     Context context;
-    TextView result, wifiStatus, listStatus, skip;
+    TextView result, wifiStatus, listStatus, skip, explain;
     Button move;
     ProgressBar progressBar, progressSearch;
     Runnable timerTask;
@@ -69,6 +73,7 @@ public class TestWIFI extends AppCompatActivity {
         progressBar = findViewById(R.id.progress);
         progressBar.setMax(10);
         result = findViewById(R.id.result);
+        explain = findViewById(R.id.explain);
         skip = findViewById(R.id.skip);
         listStatus = findViewById(R.id.listStatus);
         wifiStatus = findViewById(R.id.wifiStatus);
@@ -79,7 +84,16 @@ public class TestWIFI extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(WIFI, UNCHECKED, context);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(BLUETOOTH)) {
+                        Intent intent = new Intent(TestWIFI.this,
+                                HealthResult.class);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
 
@@ -108,6 +122,8 @@ public class TestWIFI extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         mWifiManager.setWifiEnabled(false);
+        handler.removeCallbacks(timerTask);
+        unregisterReceiver(mWifiScanReceiver);
     }
 
     @Override
@@ -160,6 +176,7 @@ public class TestWIFI extends AppCompatActivity {
     private void setFail(Context context) {
         setDefaults(WIFI, FAILED, context);
         result.setText("FAIL");
+        explain.setVisibility(View.GONE);
         progressSearch.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         result.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -168,7 +185,16 @@ public class TestWIFI extends AppCompatActivity {
         move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(BLUETOOTH)) {
+                        Intent intent = new Intent(TestWIFI.this,
+                                HealthResult.class);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
     }
@@ -299,10 +325,7 @@ public class TestWIFI extends AppCompatActivity {
                               wifiManager.disconnect();
                               wifiManager.enableNetwork(b.networkId, true);
                               wifiManager.reconnect();
-
                               setPass();
-
-
                               break;
                           }
                       }
@@ -317,13 +340,23 @@ public class TestWIFI extends AppCompatActivity {
         result.setTextColor(getResources().getColor(R.color.green));
         progressSearch.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
+        explain.setVisibility(View.GONE);
         setDefaults(WIFI, SUCCESS, context);
         skip.setVisibility(View.GONE);
         move.setVisibility(View.VISIBLE);
         move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(BLUETOOTH)) {
+                        Intent intent = new Intent(TestWIFI.this,
+                                HealthResult.class);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
         handler.removeCallbacks(timerTask);
@@ -340,7 +373,16 @@ public class TestWIFI extends AppCompatActivity {
                     mWifiManager.startScan();
                 } else {
                     Toast.makeText(context, "Permission was denied ", Toast.LENGTH_SHORT).show();
-                    finish();
+                    if (getIntent().getExtras() != null) {
+                        String val = getIntent().getStringExtra(FROM);
+                        if (val.equals(BLUETOOTH)) {
+                            Intent intent = new Intent(TestWIFI.this,
+                                    HealthResult.class);
+                            startActivity(intent);
+                        }
+                    }else {
+                        finish();
+                    }
                 }
                 break;
 

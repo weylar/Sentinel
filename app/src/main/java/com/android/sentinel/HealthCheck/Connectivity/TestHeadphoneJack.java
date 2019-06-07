@@ -17,7 +17,9 @@ import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.HEADPHONE;
+import static com.android.sentinel.HealthCheck.TestFragment.NETWORK;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -28,6 +30,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
     Runnable timerTask;
     Handler handler;
     ProgressBar progressBar;
+    HeadsetStateReceiver receiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +47,31 @@ public class TestHeadphoneJack extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(HEADPHONE, UNCHECKED, TestHeadphoneJack.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(NETWORK)) {
+                        Intent intent = new Intent(TestHeadphoneJack.this, TestCharging.class);
+                        intent.putExtra(FROM, HEADPHONE);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
         move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(NETWORK)) {
+                        Intent intent = new Intent(TestHeadphoneJack.this, TestCharging.class);
+                        intent.putExtra(FROM, HEADPHONE);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
     }
@@ -79,7 +100,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
         super.onResume();
         handler = new Handler();
         IntentFilter receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
-        HeadsetStateReceiver receiver = new HeadsetStateReceiver();
+        receiver = new HeadsetStateReceiver();
         registerReceiver( receiver, receiverFilter );
         runProgress();
         timer(20000);
@@ -89,6 +110,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        unregisterReceiver(receiver);
         handler.removeCallbacks(timerTask);
 
     }
@@ -132,12 +154,14 @@ public class TestHeadphoneJack extends AppCompatActivity {
         move.setVisibility(View.GONE);
         skip.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.VISIBLE);
+        handler.postDelayed(timerTask, 10000);
     }
 
     private void passAction() {
         setDefaults(HEADPHONE, SUCCESS, TestHeadphoneJack.this);
         result.setVisibility(View.VISIBLE);
         result.setText("PASS");
+        result.setTextColor(getResources().getColor(R.color.green));
         reason.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         skip.setVisibility(View.GONE);
@@ -154,6 +178,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         move.setVisibility(View.VISIBLE);
         skip.setVisibility(View.GONE);
+        handler.removeCallbacks(timerTask);
     }
 
     public class HeadsetStateReceiver extends BroadcastReceiver {
@@ -166,12 +191,8 @@ public class TestHeadphoneJack extends AppCompatActivity {
                 int headSetState = intent.getIntExtra("state", 0);
                 if (headSetState == 0) {
                     warnNoHeadphone();
-
-
                 }else{
                     passAction();
-
-
                 }
             }
         }

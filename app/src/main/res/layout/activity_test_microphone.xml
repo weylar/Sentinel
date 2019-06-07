@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/gradient_background"
-    android:weightSum="10"
-    tools:context=".HealthCheck.Battery.TestBattery">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/gradient_background">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:layout_weight="8"
         app:cardElevation="5dp"
         app:cardCornerRadius="15dp">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/mic_dialog"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:gravity="center_horizontal"
-            android:layout_margin="25dp"/>
+            android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+            <TextView
+                android:id="@+id/dialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:gravity="center_horizontal"
+                android:text="@string/mic_dialog"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
 
             <ImageView
+                android:id="@+id/image"
+                android:layout_below="@id/dialog"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/item_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_background_red"
@@ -40,113 +40,109 @@
 
             <TextView
                 android:id="@+id/explain"
+                android:layout_below="@+id/image"
+                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_margin="10dp"
                 android:textColor="@color/black"
                 android:text="@string/earphone_details_dialog"
-                android:textAlignment="center"/>
-
+                android:textAlignment="center" />
 
 
             <TextView
                 android:id="@+id/insertEarpiece"
+                android:layout_below="@+id/explain"
+                android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:layout_marginTop="10dp" />
-        </LinearLayout>
+
+            <TextView
+                android:id="@+id/recorder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/insertEarpiece"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:visibility="gone" />
+
+            <com.jjoe64.graphview.GraphView
+                android:id="@+id/graph"
+                android:layout_below="@+id/recorder"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:visibility="gone"
+                android:layout_margin="10dp"/>
+
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/graph"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:textColor="@color/green"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                tools:text="Pass" />
+
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/result"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="10dp"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/start_skip"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:id="@+id/linear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/pass"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/label_background"
-                    android:drawableStart="@drawable/pass_white_50px"
-                    android:drawablePadding="5dp"
-                    android:paddingStart="0dp"
-                    android:paddingTop="2dp"
-                    android:onClick="passAction"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="2dp"
-                    android:text="@string/pass_btn"
-                    android:textColor="@color/white" />
-
-                <Button
-                    android:id="@+id/fail"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/label_background_red"
-                    android:drawableStart="@drawable/no_white_50px"
-                    android:drawablePadding="5dp"
-                    android:paddingStart="0dp"
-                    android:paddingTop="2dp"
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="2dp"
-                    android:onClick="failAction"
-                    android:text="@string/fail_btn"
-                    android:textColor="@color/white" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="5dp"
-                android:background="@drawable/label_background"
-                android:drawableStart="@drawable/continue_50px"
-                android:drawablePadding="5dp"
-                android:paddingStart="0dp"
-                android:paddingTop="2dp"
-                android:paddingEnd="10dp"
-                android:visibility="gone"
-                android:paddingBottom="2dp"
-                android:text="@string/start"
-                android:textColor="@color/white" />
-
-        </RelativeLayout>
-
-
-        <TextView
-            android:id="@+id/skip"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/button"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="10dp"
-            android:textSize="20sp"
-            android:text="@string/skip"/>
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:background="@drawable/label_background"
+            android:drawableStart="@drawable/continue_50px"
+            android:drawablePadding="5dp"
+            android:paddingStart="0dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="2dp"
+            android:text="@string/start"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/skip"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:background="@drawable/label_background_grey"
+            android:paddingStart="0dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="2dp"
+            android:text="@string/skip"
+            android:textColor="@color/black" />
 
     </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -11,11 +11,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.sentinel.HealthCheck.Display.TestDimming;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.BATTERY;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -23,11 +25,14 @@ import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
 public class TestBattery extends AppCompatActivity {
     TextView batLevel, battHealth, result;
     isCharging receiver;
+    String val = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_battery);
+
         batLevel = findViewById(R.id.battPercentage);
         battHealth = findViewById(R.id.batteryHealth);
         result = findViewById(R.id.result);
@@ -48,7 +53,17 @@ public class TestBattery extends AppCompatActivity {
     }
 
     public void move(View view) {
-        finish();
+        if (getIntent().getExtras() != null) {
+            val = getIntent().getStringExtra(FROM);
+            if (val.equals("Home")) {
+                Intent intent = new Intent(this, TestDimming.class);
+                intent.putExtra(FROM, BATTERY);
+                startActivity(intent);
+            }
+        }else {
+            finish();
+        }
+
     }
 
     @Override

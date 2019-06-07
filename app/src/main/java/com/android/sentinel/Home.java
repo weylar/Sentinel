@@ -57,6 +57,10 @@ public class Home extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 
     public void subscriptionClick(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -68,6 +72,12 @@ public class Home extends AppCompatActivity
 
     public void healthCheck(View view) {
         Intent intent = new Intent(Home.this, HealthCheck.class);
+        startActivity(intent);
+
+    }
+
+    public void chat(View view) {
+        Intent intent = new Intent(Home.this, Chat.class);
         startActivity(intent);
 
     }
@@ -135,6 +145,9 @@ public class Home extends AppCompatActivity
         } else if (id == R.id.sign) {
             startActivity(new Intent(this, Registration.class));
             return true;
+        }else if (id == R.id.result) {
+            startActivity(new Intent(this, HealthResult.class));
+            return true;
         } else if (id == R.id.about) {
             startActivity(new Intent(this, About.class));
             return true;
@@ -195,8 +208,7 @@ public class Home extends AppCompatActivity
             implements android.view.View.OnClickListener {
 
         Activity activity;
-        Button yes, no;
-        TextView heading, details;
+
 
         public CustomDialog(Activity activity) {
             super(activity);

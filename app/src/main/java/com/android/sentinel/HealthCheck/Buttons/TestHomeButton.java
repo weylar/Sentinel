@@ -17,7 +17,9 @@ import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.HOME;
+import static com.android.sentinel.HealthCheck.TestFragment.POWER;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -46,7 +48,17 @@ public class TestHomeButton extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(HOME, UNCHECKED, TestHomeButton.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(POWER)) {
+                        Intent intent = new Intent(TestHomeButton.this,
+                                TestVolume.class);
+                        intent.putExtra(FROM, HOME);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
 
@@ -88,6 +100,25 @@ public class TestHomeButton extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         handler = new Handler();
+        runProgress();
+        timer(10000);
+        mHomeWatcher = new HomeWatcher(this);
+        mHomeWatcher.setOnHomePressedListener(new OnHomePressedListener() {
+            @Override
+            public void onHomePressed() {
+                setPass();
+            }
+
+            @Override
+            public void onHomeLongPressed() {
+                setPass();
+            }
+        });
+
+        mHomeWatcher.startWatch();
+    }
+
+    private void runProgress() {
         thread = new Thread(){
             @Override
             public void run(){
@@ -106,23 +137,6 @@ public class TestHomeButton extends AppCompatActivity {
             }
         };
         thread.start();
-
-
-        timer(10000);
-        mHomeWatcher = new HomeWatcher(this);
-        mHomeWatcher.setOnHomePressedListener(new OnHomePressedListener() {
-            @Override
-            public void onHomePressed() {
-                setPass();
-            }
-
-            @Override
-            public void onHomeLongPressed() {
-                setPass();
-            }
-        });
-
-        mHomeWatcher.startWatch();
     }
 
     @Override
@@ -143,9 +157,17 @@ public class TestHomeButton extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TestHomeButton.this, HealthCheck.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(POWER)) {
+                        Intent intent = new Intent(TestHomeButton.this,
+                                TestVolume.class);
+                        intent.putExtra(FROM, HOME);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
         progressBar.setVisibility(View.GONE);
@@ -164,19 +186,20 @@ public class TestHomeButton extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TestHomeButton.this, HealthCheck.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(POWER)) {
+                        Intent intent = new Intent(TestHomeButton.this,
+                                TestVolume.class);
+                        intent.putExtra(FROM, HOME);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
 
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setDefaults(HOME, UNCHECKED, TestHomeButton.this);
-                finish();
-            }
-        });
     }
 
     public class HomeWatcher {

@@ -11,11 +11,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.sentinel.HealthCheck.Camera.TestFlash;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
+import static com.android.sentinel.HealthCheck.TestFragment.BATTERY;
 import static com.android.sentinel.HealthCheck.TestFragment.DIMMING;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -42,14 +45,32 @@ public class TestDimming extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(DIMMING, UNCHECKED, TestDimming.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(BATTERY)) {
+                        Intent intent = new Intent(TestDimming.this, TestFlash.class);
+                        intent.putExtra(FROM, DIMMING);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
         pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setDefaults(DIMMING, SUCCESS, TestDimming.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(BATTERY)) {
+                        Intent intent = new Intent(TestDimming.this, TestFlash.class);
+                        intent.putExtra(FROM, DIMMING);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
 
@@ -57,7 +78,16 @@ public class TestDimming extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(DIMMING, FAILED, TestDimming.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(BATTERY)) {
+                        Intent intent = new Intent(TestDimming.this, TestFlash.class);
+                        intent.putExtra(FROM, DIMMING);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
 
@@ -85,6 +115,7 @@ public class TestDimming extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        handler = new Handler();
         timer(1000);
     }
 
@@ -103,7 +134,7 @@ public class TestDimming extends AppCompatActivity {
     }
 
     private void timer(final long delayMillis) {
-        handler = new Handler();
+
         timerTask = new Runnable() {
             @Override
             public void run() {

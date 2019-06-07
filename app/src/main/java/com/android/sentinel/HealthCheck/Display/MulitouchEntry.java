@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.sentinel.HealthCheck.Buttons.TestVolume;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
+import static com.android.sentinel.HealthCheck.TestFragment.HOME;
 import static com.android.sentinel.HealthCheck.TestFragment.MULTITOUCH;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
+import static com.android.sentinel.HealthCheck.TestFragment.VOLUME;
 import static com.android.sentinel.HealthCheck.TestFragment.getDefaults;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
 
@@ -20,6 +24,7 @@ public class MulitouchEntry extends AppCompatActivity {
     TextView result, skip, explanation;
     Button btn;
     String value;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,25 +53,31 @@ public class MulitouchEntry extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (value != null && value.equals("yes")) {
-            if (getDefaults(MULTITOUCH, this) == 1) {
-                Intent intent = new Intent(MulitouchEntry.this, HealthCheck.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
-                setDefaults(MULTITOUCH, UNCHECKED, this);
-            } else if (getDefaults(MULTITOUCH, this) == 2) {
-                Intent intent = new Intent(MulitouchEntry.this, HealthCheck.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+        if (getIntent().getStringExtra(FROM) != null){
+            super.onBackPressed();
+
+        }else {
+            if (value != null && value.equals("yes")) {
+                if (getDefaults(MULTITOUCH, this) == 1) {
+                    Intent intent = new Intent(MulitouchEntry.this, HealthCheck.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                    setDefaults(MULTITOUCH, UNCHECKED, this);
+                } else if (getDefaults(MULTITOUCH, this) == 2) {
+                    Intent intent = new Intent(MulitouchEntry.this, HealthCheck.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                    setDefaults(MULTITOUCH, UNCHECKED, this);
+                }
+            } else {
+                super.onBackPressed();
                 setDefaults(MULTITOUCH, UNCHECKED, this);
             }
-        } else {
-            super.onBackPressed();
-            setDefaults(MULTITOUCH, UNCHECKED, this);
+        }
         }
 
 
-    }
+
 
     @Override
     protected void onResume() {
@@ -85,8 +96,18 @@ public class MulitouchEntry extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(MulitouchEntry.this, TestMultitouch.class);
-                    startActivity(intent);
+                    if (getIntent().getExtras() != null) {
+                        String val = getIntent().getStringExtra(FROM);
+                        if (val.equals(VOLUME)) {
+                            Intent intent = new Intent(MulitouchEntry.this, TestMultitouch.class);
+                            intent.putExtra(FROM, VOLUME);
+                            startActivity(intent);
+                        }
+                    }else {
+                        Intent intent = new Intent(MulitouchEntry.this, TestMultitouch.class);
+                        startActivity(intent);
+                    }
+
                 }
             });
 
@@ -94,7 +115,17 @@ public class MulitouchEntry extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     setDefaults(MULTITOUCH, UNCHECKED, MulitouchEntry.this);
-                    finish();
+                    if (getIntent().getExtras() != null) {
+                        String val = getIntent().getStringExtra(FROM);
+                        if (val.equals(VOLUME)) {
+                            Intent intent = new Intent(MulitouchEntry.this,
+                                    TouchscreenEntry.class);
+                            intent.putExtra(FROM, MULTITOUCH);
+                            startActivity(intent);
+                        }
+                    } else {
+                        finish();
+                    }
                 }
             });
         }
@@ -111,9 +142,17 @@ public class MulitouchEntry extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MulitouchEntry.this, HealthCheck.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                if (getIntent().getStringExtra(FROM) != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(VOLUME)) {
+                        Intent intent = new Intent(MulitouchEntry.this,
+                                TouchscreenEntry.class);
+                        intent.putExtra(FROM, MULTITOUCH);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
     }
@@ -127,9 +166,17 @@ public class MulitouchEntry extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MulitouchEntry.this, HealthCheck.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                if (getIntent().getStringExtra(FROM) != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(VOLUME)) {
+                        Intent intent = new Intent(MulitouchEntry.this,
+                                TouchscreenEntry.class);
+                        intent.putExtra(FROM, MULTITOUCH);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
     }

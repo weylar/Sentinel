@@ -21,12 +21,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.sentinel.HealthCheck.Buttons.TestPower;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.PRIMARY_CAMERA;
 import static com.android.sentinel.HealthCheck.TestFragment.REQUEST_IMAGE_CAPTURE;
+import static com.android.sentinel.HealthCheck.TestFragment.SECONDARY_CAMERA;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -64,7 +67,17 @@ public class PrimaryCamEntry extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(PRIMARY_CAMERA, UNCHECKED, context);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(SECONDARY_CAMERA)) {
+                        Intent intent = new Intent(PrimaryCamEntry.this,
+                                TestPower.class);
+                        intent.putExtra(FROM, PRIMARY_CAMERA);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -106,21 +119,49 @@ public class PrimaryCamEntry extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     setDefaults(PRIMARY_CAMERA, SUCCESS, context);
-                    finish();
+                    if (getIntent().getExtras() != null) {
+                        String val = getIntent().getStringExtra(FROM);
+                        if (val.equals(SECONDARY_CAMERA)) {
+                            Intent intent = new Intent(PrimaryCamEntry.this,
+                                    TestPower.class);
+                            intent.putExtra(FROM, PRIMARY_CAMERA);
+                            startActivity(intent);
+                        }
+                    } else {
+                        finish();
+                    }
                 }
             });
             fail.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     setDefaults(PRIMARY_CAMERA, FAILED, context);
-                    finish();
+                    if (getIntent().getExtras() != null) {
+                        String val = getIntent().getStringExtra(FROM);
+                        if (val.equals(SECONDARY_CAMERA)) {
+                            Intent intent = new Intent(PrimaryCamEntry.this,
+                                    TestPower.class);
+                            intent.putExtra(FROM, PRIMARY_CAMERA);
+                            startActivity(intent);
+                        }
+                    } else {
+                        finish();
+                    }
                 }
             });
         } else if (resultCode == RESULT_CANCELED) {
             setDefaults(PRIMARY_CAMERA, UNCHECKED, context);
-            Intent intent = new Intent(PrimaryCamEntry.this, HealthCheck.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(intent);
+            if (getIntent().getExtras() != null) {
+                String val = getIntent().getStringExtra(FROM);
+                if (val.equals(SECONDARY_CAMERA)) {
+                    Intent intent = new Intent(PrimaryCamEntry.this,
+                            TestPower.class);
+                    intent.putExtra(FROM, PRIMARY_CAMERA);
+                    startActivity(intent);
+                }
+            } else {
+                finish();
+            }
         }
     }
 
@@ -134,7 +175,17 @@ public class PrimaryCamEntry extends AppCompatActivity {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                 } else {
                     Toast.makeText(context, "Permission was denied ", Toast.LENGTH_SHORT).show();
-                    finish();
+                    if (getIntent().getExtras() != null) {
+                        String val = getIntent().getStringExtra(FROM);
+                        if (val.equals(SECONDARY_CAMERA)) {
+                            Intent intent = new Intent(PrimaryCamEntry.this,
+                                    TestPower.class);
+                            intent.putExtra(FROM, PRIMARY_CAMERA);
+                            startActivity(intent);
+                        }
+                    } else {
+                        finish();
+                    }
                 }
                 return;
             }

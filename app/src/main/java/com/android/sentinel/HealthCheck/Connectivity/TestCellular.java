@@ -18,9 +18,11 @@ import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.NETWORK;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
+import static com.android.sentinel.HealthCheck.TestFragment.VIBRATOR;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
 
 public class TestCellular extends AppCompatActivity {
@@ -97,18 +99,18 @@ public class TestCellular extends AppCompatActivity {
     }
 
     public void move(View view) {
-        finish();
+        if (getIntent().getExtras() != null) {
+            String val = getIntent().getStringExtra(FROM);
+            if (val.equals(VIBRATOR)) {
+                Intent intent = new Intent(TestCellular.this, TestHeadphoneJack.class);
+                intent.putExtra(FROM, NETWORK);
+                startActivity(intent);
+            }
+        } else {
+            finish();
+        }
     }
-//    private void timer(long delayMillis) {
-//        Runnable timerTask = new Runnable() {
-//            @Override
-//            public void run() {
-//               setFail(TestCellular.this);
-//            }
-//        };
-//        Handler handler = new Handler();
-//        handler.postDelayed(timerTask, delayMillis);
-//    }
+
     public class NetworkChangeReceiver extends BroadcastReceiver {
 
         @Override
@@ -137,7 +139,16 @@ public class TestCellular extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(NETWORK, FAILED, context);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(VIBRATOR)) {
+                        Intent intent = new Intent(TestCellular.this, TestHeadphoneJack.class);
+                        intent.putExtra(FROM, NETWORK);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
         progressBar.setVisibility(View.GONE);
@@ -152,7 +163,16 @@ public class TestCellular extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(NETWORK, SUCCESS, context);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(VIBRATOR)) {
+                        Intent intent = new Intent(TestCellular.this, TestHeadphoneJack.class);
+                        intent.putExtra(FROM, NETWORK);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
         setDefaults(NETWORK, SUCCESS, context);

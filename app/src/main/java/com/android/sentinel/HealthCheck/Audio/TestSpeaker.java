@@ -17,13 +17,15 @@ import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FLASH;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.SPEAKER;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
 
 public class TestSpeaker extends AppCompatActivity {
-    TextView result, skip, insertEarpiece, explain;
+    TextView skip, insertEarpiece, explain;
     Button start;
     LinearLayout pass_fail, skip_start;
     MediaPlayer mp;
@@ -45,7 +47,16 @@ public class TestSpeaker extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(SPEAKER, UNCHECKED, TestSpeaker.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(FLASH)) {
+                        Intent intent = new Intent(TestSpeaker.this, TestReceiver.class);
+                        intent.putExtra(FROM, SPEAKER);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
     }
@@ -112,12 +123,30 @@ public class TestSpeaker extends AppCompatActivity {
 
     public void passAction(View view) {
         setDefaults(SPEAKER, SUCCESS, TestSpeaker.this);
-        finish();
+        if (getIntent().getExtras() != null) {
+            String val = getIntent().getStringExtra(FROM);
+            if (val.equals(FLASH)) {
+                Intent intent = new Intent(TestSpeaker.this, TestReceiver.class);
+                intent.putExtra(FROM, SPEAKER);
+                startActivity(intent);
+            }
+        } else {
+            finish();
+        }
     }
 
     public void failAction(View view) {
         setDefaults(SPEAKER, FAILED, TestSpeaker.this);
-        finish();
+        if (getIntent().getExtras() != null) {
+            String val = getIntent().getStringExtra(FROM);
+            if (val.equals(FLASH)) {
+                Intent intent = new Intent(TestSpeaker.this, TestReceiver.class);
+                intent.putExtra(FROM, SPEAKER);
+                startActivity(intent);
+            }
+        } else {
+            finish();
+        }
     }
 
     public class HeadsetStateReceiver extends BroadcastReceiver {

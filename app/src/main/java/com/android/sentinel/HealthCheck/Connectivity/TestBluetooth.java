@@ -28,7 +28,9 @@ import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.BLUETOOTH;
+import static com.android.sentinel.HealthCheck.TestFragment.DISPLAY;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -61,7 +63,17 @@ public class TestBluetooth extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(BLUETOOTH, UNCHECKED, context);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(DISPLAY)) {
+                        Intent intent = new Intent(TestBluetooth.this,
+                                TestWIFI.class);
+                        intent.putExtra(FROM, BLUETOOTH);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
 
@@ -109,7 +121,17 @@ public class TestBluetooth extends AppCompatActivity {
         move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(DISPLAY)) {
+                        Intent intent = new Intent(TestBluetooth.this,
+                                TestWIFI.class);
+                        intent.putExtra(FROM, BLUETOOTH);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
         progressBar.setVisibility(View.GONE);
@@ -256,7 +278,17 @@ public class TestBluetooth extends AppCompatActivity {
         move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(DISPLAY)) {
+                        Intent intent = new Intent(TestBluetooth.this,
+                                TestWIFI.class);
+                        intent.putExtra(FROM, BLUETOOTH);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
     }

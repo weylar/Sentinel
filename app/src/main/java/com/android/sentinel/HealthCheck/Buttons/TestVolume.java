@@ -10,10 +10,15 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.sentinel.HealthCheck.Display.MulitouchEntry;
+import com.android.sentinel.HealthCheck.Display.TestMultitouch;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
+import static com.android.sentinel.HealthCheck.TestFragment.HOME;
+import static com.android.sentinel.HealthCheck.TestFragment.POWER;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.VOLUME;
@@ -47,7 +52,17 @@ public class TestVolume extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(VOLUME, UNCHECKED, TestVolume.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(HOME)) {
+                        Intent intent = new Intent(TestVolume.this,
+                                MulitouchEntry.class);
+                        intent.putExtra(FROM, VOLUME);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
 
@@ -77,8 +92,8 @@ public class TestVolume extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        handler = new Handler();
         timer(10000);
-
         runProgress();
 
     }
@@ -143,9 +158,17 @@ public class TestVolume extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(TestVolume.this, HealthCheck.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    startActivity(intent);
+                    if (getIntent().getExtras() != null) {
+                        String val = getIntent().getStringExtra(FROM);
+                        if (val.equals(HOME)) {
+                            Intent intent = new Intent(TestVolume.this,
+                                    MulitouchEntry.class);
+                            intent.putExtra(FROM, VOLUME);
+                            startActivity(intent);
+                        }
+                    }else {
+                        finish();
+                    }
                 }
             });
 
@@ -160,7 +183,6 @@ public class TestVolume extends AppCompatActivity {
                 setFail();
             }
         };
-        handler = new Handler();
         handler.postDelayed(timerTask, delayMillis);
     }
 
@@ -176,19 +198,21 @@ public class TestVolume extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TestVolume.this, HealthCheck.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(HOME)) {
+                        Intent intent = new Intent(TestVolume.this,
+                                MulitouchEntry.class);
+                        intent.putExtra(FROM, VOLUME);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
 
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setDefaults(VOLUME, UNCHECKED, TestVolume.this);
-                finish();
-            }
-        });
+
     }
 
 }

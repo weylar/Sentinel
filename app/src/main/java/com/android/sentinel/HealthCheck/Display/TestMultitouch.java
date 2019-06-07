@@ -22,8 +22,10 @@ import android.widget.Toast;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.MULTITOUCH;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
+import static com.android.sentinel.HealthCheck.TestFragment.VOLUME;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
 
 public class TestMultitouch extends AppCompatActivity {
@@ -118,12 +120,18 @@ public class TestMultitouch extends AppCompatActivity {
                 case R.id.yes:
                     Intent intentYes = new Intent(TestMultitouch.this, MulitouchEntry.class);
                     intentYes.putExtra("FROM_MULTITOUCH", "yes");
+                    intentYes.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    if (getIntent().getStringExtra(FROM) != null)
+                    {intentYes.putExtra(FROM, VOLUME);}
                     startActivity(intentYes);
                     setDefaults(MULTITOUCH, SUCCESS, TestMultitouch.this);
                     break;
                 case R.id.no:
                     Intent intentNo = new Intent(TestMultitouch.this, MulitouchEntry.class);
                     intentNo.putExtra("FROM_MULTITOUCH", "yes");
+                    intentNo.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    if (getIntent().getStringExtra(FROM) != null)
+                    {intentNo.putExtra(FROM, VOLUME);}
                     startActivity(intentNo);
                     setDefaults(MULTITOUCH, FAILED, TestMultitouch.this);
                     break;

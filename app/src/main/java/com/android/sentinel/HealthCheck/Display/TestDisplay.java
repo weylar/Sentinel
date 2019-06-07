@@ -19,7 +19,10 @@ import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.DISPLAY;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
+import static com.android.sentinel.HealthCheck.TestFragment.MULTITOUCH;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
+import static com.android.sentinel.HealthCheck.TestFragment.TOUCHSCREEN;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
 
@@ -126,12 +129,18 @@ public class TestDisplay extends AppCompatActivity {
                 case R.id.yes:
                     Intent intentYes = new Intent(TestDisplay.this, DisplayEntry.class);
                     intentYes.putExtra("FROM_DISPLAY", "yes");
+                    intentYes.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                    if (getIntent().getStringExtra(FROM) != null)
+                    {intentYes.putExtra(FROM, TOUCHSCREEN);}
                     startActivity(intentYes);
                     setDefaults(DISPLAY, SUCCESS, TestDisplay.this);
                     break;
                 case R.id.no:
                     Intent intentNo = new Intent(TestDisplay.this, DisplayEntry.class);
                     intentNo.putExtra("FROM_DISPLAY", "yes");
+                    intentNo.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                    if (getIntent().getStringExtra(FROM) != null)
+                    {intentNo.putExtra(FROM, TOUCHSCREEN);}
                     startActivity(intentNo);
                     setDefaults(DISPLAY, FAILED, TestDisplay.this);
                     break;

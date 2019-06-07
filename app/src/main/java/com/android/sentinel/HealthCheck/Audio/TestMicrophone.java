@@ -6,60 +6,83 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
+import android.media.AudioFormat;
+import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
-
-import java.io.IOException;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.MIC;
+import static com.android.sentinel.HealthCheck.TestFragment.RECEIVER;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
 
 public class TestMicrophone extends AppCompatActivity {
 
-    TextView result, skip, insertEarpiece, explain;
+    TextView skip, insertEarpiece, explain, recorder, result;
     Button start;
-    LinearLayout linearLayout;
-    MediaPlayer mp;
     HeadsetStateReceiver receiver;
     Handler handler;
-    MediaRecorder mediaRecorder;
+    AudioRecord audioRecord = null;
+    int minSize;
     Runnable timerTask;
-    private static String fileName = null;
+    Runnable stopRecordingRunnable;
+    ProgressBar progressBar;
+    GraphView graph;
+    int isWorking = 2;
+    private LineGraphSeries<DataPoint> mSeries;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_microphone);
         getSupportActionBar().setHomeButtonEnabled(true);
+        graph = findViewById(R.id.graph);
+        handler = new Handler();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         skip = findViewById(R.id.skip);
-        linearLayout = findViewById(R.id.linear);
+        result = findViewById(R.id.result);
+        recorder = findViewById(R.id.recorder);
+        progressBar = findViewById(R.id.progress);
         explain = findViewById(R.id.explain);
         insertEarpiece = findViewById(R.id.insertEarpiece);
         start = findViewById(R.id.button);
+
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setDefaults(MIC, UNCHECKED, TestMicrophone.this);
-                finish();
+                isWorking = 0;
+                handler.removeCallbacks(timerTask);
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(RECEIVER)) {
+                        Intent intent = new Intent(TestMicrophone.this, TestEarphone.class);
+                        intent.putExtra(FROM, MIC);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
     }
@@ -69,6 +92,8 @@ public class TestMicrophone extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 setDefaults(MIC, UNCHECKED, this);
+                handler.removeCallbacks(timerTask);
+                isWorking = 0;
                 Intent intent = new Intent(this, HealthCheck.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
@@ -81,40 +106,42 @@ public class TestMicrophone extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         setDefaults(MIC, UNCHECKED, this);
+        handler.removeCallbacks(timerTask);
+        isWorking = 0;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mp = new MediaPlayer();
-        mediaRecorder = new MediaRecorder();
         IntentFilter receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         receiver = new HeadsetStateReceiver();
         registerReceiver(receiver, receiverFilter);
+
+
     }
 
-    public class HeadsetStateReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(final Context context, final Intent intent) {
-            String action = intent.getAction();
-            if ((action.equals(Intent.ACTION_HEADSET_PLUG))) {
-                int headSetState = intent.getIntExtra("state", 0);
-                if (headSetState == 0) {
-                    start.setVisibility(View.VISIBLE);
-                    start.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            requestPermission();
-                        }
-                    });
-                    explain.setVisibility(View.VISIBLE);
-                    explain.setText(getResources().getString(R.string.now_playing));
-                    insertEarpiece.setVisibility(View.GONE);
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions,
+                                           int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startRecording();
                 } else {
-                    warnRemoveHeadphone();
-
+                    Toast.makeText(this, "Permission was denied ", Toast.LENGTH_SHORT).show();
+                    if (getIntent().getExtras() != null) {
+                        String val = getIntent().getStringExtra(FROM);
+                        if (val.equals(RECEIVER)) {
+                            Intent intent = new Intent(TestMicrophone.this, TestEarphone.class);
+                            intent.putExtra(FROM, MIC);
+                            startActivity(intent);
+                        }
+                    } else {
+                        finish();
+                    }
                 }
+                return;
             }
         }
     }
@@ -133,105 +160,202 @@ public class TestMicrophone extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO},
                     1);
         } else {
-            Toast.makeText(this, "Granted", Toast.LENGTH_SHORT).show();
             startRecording();
 
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startRecording();
-
-                } else {
-                    Toast.makeText(this, "Permission was denied ", Toast.LENGTH_SHORT).show();
-                }
-                return;
-            }
-        }
-    }
-
     private void startRecording() {
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mediaRecorder.setOutputFile(fileName);
-        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
-        try {
-            mediaRecorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {
-                @Override
-                public void onError(MediaRecorder mediaRecorder, int i, int i1) {
-                    Log.e("Media Error", i + "");
-                }
-            });
-            mediaRecorder.prepare();
-            mediaRecorder.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        minSize = AudioRecord.getMinBufferSize(8000, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+        audioRecord = new AudioRecord(MediaRecorder.AudioSource.MIC,
+                8000,
+                AudioFormat.CHANNEL_IN_MONO,
+                AudioFormat.ENCODING_PCM_16BIT,
+                minSize);
+        audioRecord.startRecording();
+        mSeries = new LineGraphSeries<>(generateData());
+        graph.addSeries(mSeries);
         start.setVisibility(View.GONE);
-        timer(5000);
+        insertEarpiece.setVisibility(View.GONE);
+        updateAmplitude(2);
+        autoStopRecording(10000);
+        updateProgress(1000, 10);
 
     }
 
-    private void timer(long delayMillis) {
+    private void updateAmplitude(final long delayMillis) {
         timerTask = new Runnable() {
             @Override
             public void run() {
-
                 try {
-                    stopRecording();
-                    playRecording();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    explain.setVisibility(View.VISIBLE);
+                    explain.setText(getResources().getString(R.string.recorder));
+                    recorder.setVisibility(View.VISIBLE);
+                    graph.setVisibility(View.VISIBLE);
+                    recorder.setText("Amplitude - " + (int) getAmplitude());
+                    mSeries.resetData(generateData());
+                    if ((int) getAmplitude() < 600) {
+                        insertEarpiece.setVisibility(View.VISIBLE);
+                        insertEarpiece.setText("Input is low, please increase your voice");
+                        insertEarpiece.setTextColor(getResources().getColor(R.color.colorPrimary));
+
+                    } else {
+                        insertEarpiece.setVisibility(View.GONE);
+                    }
+
+                    if ((int) getAmplitude() > 100) {
+                        isWorking = 1;
+                    }
+
+                } finally {
+                    handler.postDelayed(timerTask, delayMillis);
+                }
+
+
+            }
+        };
+
+        timerTask.run();
+    }
+
+    private void autoStopRecording(final long millisec) {
+        stopRecordingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                stopRecording();
+            }
+        };
+        handler.postDelayed(stopRecordingRunnable, millisec);
+    }
+
+    public void updateProgress(final long millisec, final int max) {
+        progressBar.setVisibility(View.VISIBLE);
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                for (int i = 0; i <= max; i++) {
+                    if (i > 0) {
+                        try {
+                            sleep(millisec);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    progressBar.setMax(max);
+                    progressBar.setProgress(i);
                 }
             }
         };
-        handler = new Handler();
-        handler.postDelayed(timerTask, delayMillis);
+        thread.start();
+    }
+
+    private DataPoint[] generateData() {
+        int count = 5;
+        DataPoint[] values = new DataPoint[count];
+        for (int i = 0; i < count; i++) {
+            double x = i;
+            double y = getAmplitude();
+            DataPoint v = new DataPoint(x, y);
+            values[i] = v;
+        }
+        return values;
     }
 
     private void stopRecording() {
-        mediaRecorder.stop();
-        mediaRecorder.release();
-        mediaRecorder = null;
-    }
+        if (audioRecord != null) {
+            audioRecord.stop();
+        }
 
-    private void playRecording() throws IOException {
-        mp.setDataSource(fileName);
-        mp.prepareAsync();
-        mp.setLooping(true);
-        mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        if (isWorking == 1) {
+            result.setVisibility(View.VISIBLE);
+            result.setText("PASS");
+            result.setTextColor(getResources().getColor(R.color.green));
+            setDefaults(MIC, SUCCESS, TestMicrophone.this);
+
+        } else if (isWorking == 2) {
+            result.setVisibility(View.VISIBLE);
+            result.setText("FAIL");
+            result.setTextColor(getResources().getColor(R.color.colorPrimary));
+            setDefaults(MIC, FAILED, TestMicrophone.this);
+        }
+
+
+        handler.removeCallbacks(timerTask);
+        insertEarpiece.setVisibility(View.GONE);
+        recorder.setVisibility(View.GONE);
+        explain.setVisibility(View.GONE);
+        graph.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        skip.setVisibility(View.GONE);
+        start.setVisibility(View.VISIBLE);
+        start.setText("Continue");
+        start.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mp.start();
+            public void onClick(View view) {
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(RECEIVER)) {
+                        Intent intent = new Intent(TestMicrophone.this, TestEarphone.class);
+                        intent.putExtra(FROM, MIC);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
+
+
+    }
+
+    private double getAmplitude() {
+        short[] buffer = new short[minSize];
+        audioRecord.read(buffer, 0, minSize);
+        int max = 0;
+        for (short s : buffer) {
+            if (Math.abs(s) > max) {
+                max = Math.abs(s);
+            }
+        }
+        return max;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mp.stop();
         unregisterReceiver(receiver);
-        //handler.removeCallbacks(timerTask);
+        stopRecording();
+        handler.removeCallbacks(timerTask);
+        handler.removeCallbacks(stopRecordingRunnable);
     }
 
+    public class HeadsetStateReceiver extends BroadcastReceiver {
 
+        @Override
+        public void onReceive(final Context context, final Intent intent) {
+            String action = intent.getAction();
+            if ((action.equals(Intent.ACTION_HEADSET_PLUG))) {
+                int headSetState = intent.getIntExtra("state", 0);
+                if (headSetState == 0) {
+                    start.setVisibility(View.VISIBLE);
+                    insertEarpiece.setVisibility(View.GONE);
+                    explain.setVisibility(View.VISIBLE);
+                    start.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            requestPermission();
+                        }
+                    });
 
-    public void passAction(View view) {
-        setDefaults(MIC, SUCCESS, TestMicrophone.this);
-        finish();
+                } else {
+                    warnRemoveHeadphone();
+
+                }
+            }
+        }
     }
 
-    public void failAction(View view) {
-        setDefaults(MIC, FAILED, TestMicrophone.this);
-        finish();
-    }
 
 }

@@ -39,6 +39,7 @@ public class DeviceInfoFragment extends Fragment {
     TextView battHealth;
     View view;
     TextView phoneState;
+    isCharging receiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class DeviceInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.device_info, container, false);
         phoneState = view.findViewById(R.id.phone_state);
+        receiver = new isCharging();
         showSpecification(view);
         showStorage(view);
         showMemory(view);
@@ -61,10 +63,16 @@ public class DeviceInfoFragment extends Fragment {
     private void showBattery(View view) {
         battHealth = view.findViewById(R.id.battery);
         battHealth.append("(" + showBatPercentage() + "%)");
-        isCharging receiver = new isCharging();
+
         IntentFilter ifilter = new IntentFilter();
         ifilter.addAction(Intent.ACTION_BATTERY_CHANGED);
         getActivity().registerReceiver(receiver, ifilter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        //getActivity().unregisterReceiver(receiver);
     }
 
     public int showBatPercentage() {

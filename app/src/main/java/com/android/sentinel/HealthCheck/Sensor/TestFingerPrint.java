@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.sentinel.HealthCheck.Camera.SecondaryCameraEntry;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
@@ -43,8 +44,12 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
+import static com.android.sentinel.HealthCheck.TestFragment.COMPASS;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
 import static com.android.sentinel.HealthCheck.TestFragment.FINGERPRINT;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
+import static com.android.sentinel.HealthCheck.TestFragment.SECONDARY_CAMERA;
+import static com.android.sentinel.HealthCheck.TestFragment.SENSOR;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -91,9 +96,17 @@ public class TestFingerPrint extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(FINGERPRINT, UNCHECKED, TestFingerPrint.this);
-                Intent intent = new Intent(TestFingerPrint.this, HealthCheck.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(SENSOR)) {
+                        Intent intent = new Intent(TestFingerPrint.this,
+                                SecondaryCameraEntry.class);
+                        intent.putExtra(FROM, FINGERPRINT);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
 
@@ -312,7 +325,17 @@ public class TestFingerPrint extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     setDefaults(FINGERPRINT, FAILED, TestFingerPrint.this);
-                    finish();
+                    if (getIntent().getExtras() != null) {
+                        String val = getIntent().getStringExtra(FROM);
+                        if (val.equals(SENSOR)) {
+                            Intent intent = new Intent(TestFingerPrint.this,
+                                    SecondaryCameraEntry.class);
+                            intent.putExtra(FROM, FINGERPRINT);
+                            startActivity(intent);
+                        }
+                    } else {
+                        finish();
+                    }
                 }
             });
         }
@@ -333,7 +356,17 @@ public class TestFingerPrint extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     setDefaults(FINGERPRINT, UNCHECKED, TestFingerPrint.this);
-                    finish();
+                    if (getIntent().getExtras() != null) {
+                        String val = getIntent().getStringExtra(FROM);
+                        if (val.equals(SENSOR)) {
+                            Intent intent = new Intent(TestFingerPrint.this,
+                                    SecondaryCameraEntry.class);
+                            intent.putExtra(FROM, FINGERPRINT);
+                            startActivity(intent);
+                        }
+                    }else {
+                        finish();
+                    }
                 }
             });
 
@@ -359,7 +392,17 @@ public class TestFingerPrint extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(FINGERPRINT, SUCCESS, TestFingerPrint.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(SENSOR)) {
+                        Intent intent = new Intent(TestFingerPrint.this,
+                                SecondaryCameraEntry.class);
+                        intent.putExtra(FROM, FINGERPRINT);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
     }
@@ -375,7 +418,17 @@ public class TestFingerPrint extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(FINGERPRINT, FAILED, TestFingerPrint.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(SENSOR)) {
+                        Intent intent = new Intent(TestFingerPrint.this,
+                                SecondaryCameraEntry.class);
+                        intent.putExtra(FROM, FINGERPRINT);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
     }

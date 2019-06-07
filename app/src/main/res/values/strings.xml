@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Sentinel</string>
-    <string name="touchscreen">Touch any part of the screen to confirm if its working or not, phone vibrates if positive and not if otherwise</string>
+    <string name="touchscreen">Touch any part of the screen to confirm if its working or not, phone vibrates if positive and not if otherwise.</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_desc">Navigation header</string>
@@ -64,7 +64,7 @@
     <string name="did_you_feel">Did you feel vibration when you multi touched the screen?</string>
     <string name="touch_dialog">Test the touchscreen functionality works properly.</string>
     <string name="touch_details">Did it all pixels respond to touch?</string>
-    <string name="permission_details">You need to enable all required permissions, click go to settings to proceed</string>
+    <string name="permission_details">You need to enable all required permissions, click go to settings to proceed, then select permission and enable all permissions.</string>
     <string name="touch_heading">Touchscreen</string>
     <string name="permission_heading">Permission</string>
     <string name="display_dialog">Check the display for missing pixels.</string>
@@ -84,7 +84,7 @@
     <string name="home_dialog">Tests that the home button is functional</string>
     <string name="fingerprint_dialog">Tests that the fingerprint hardware is functional</string>
     <string name="home_dialog_details">Press the home button. The app should close. Relaunch the application by pressing the app icon or by using task manager.</string>
-    <string name="fingerprint_dialog_details">Place your finger on the fingerprint sensor for recognition. Ensure that your device lock screen is activated and finger has already been registered on the device</string>
+    <string name="fingerprint_dialog_details">Place your finger on the fingerprint sensor for recognition. Ensure that your device lock screen is activated and finger has already been registered on the device.</string>
     <string name="volume_dialog">Checks that the audio control is functional.</string>
     <string name="volume_dialog_details">Press the volume up and volume down buttons individually.</string>
     <string name="volume_up_pressed">Volume Up pressed</string>
@@ -93,8 +93,8 @@
     <string name="power_dialog_detail">Press the power button, the screen will go off, press again to turn it on.</string>
     <string name="front_cam_dialog">Tests that the front camera is functional.</string>
     <string name="back_cam_dialog">Tests that the back camera is functional.</string>
-    <string name="front_cam_dialog_details">Test the front camera. You will be redirected to take a picture, if you see what you snap, tap on pass, otherwise tap fail</string>
-    <string name="back_cam_dialog_details">Test the back camera. You will be redirected to take a picture, if you see what you snap, tap on pass, otherwise tap fail</string>
+    <string name="front_cam_dialog_details">Test the front camera. You will be redirected to take a picture, if you see what you snap, tap on pass, otherwise tap fail.</string>
+    <string name="back_cam_dialog_details">Test the back camera. You will be redirected to take a picture, if you see what you snap, tap on pass, otherwise tap fail.</string>
     <string name="flashlight_dialog_detail">Verify if the flash LED for the camera is on.</string>
     <string name="network_dialog_detail">Test will pass once cellular network is detected.</string>
     <string name="headphone_dialog_detail">Test will pass once headphone (earphone) is detected.</string>
@@ -105,7 +105,8 @@
     <string name="wifi_dialog_detail">Test will pass once WI-FI network is detected and connected.</string>
     <string name="insert_headphone">No headphone detected, please insert headphone.</string>
     <string name="remove_headphone">Please remove earphone.</string>
-    <string name="now_playing">Audio now playing.\n\nIf you hear any sound press PASS, otherwise press FAIL</string>
+    <string name="now_playing">Audio now playing.\n\nIf you hear any sound press PASS, otherwise press FAIL.</string>
+    <string name="recorder">Recording started…\nMake some sound to measure the amplitude at high and low frequency.</string>
     <string name="now_playing_receiver">Audio now playing through receiver speaker.\n\nIf you can\'t hear the sound, kindly place the phone to your ear.</string>
     <string name="splash_screen_logo">splash screen logo</string>
     <string name="general_info">General Info</string>
@@ -113,13 +114,26 @@
     <string name="memory">Memory</string>
     <string name="power">Power</string>
     <string name="phone_state">Phone State</string>
-    <string name="not_support_fingerprint">Your device doesn\'t support fingerprint authentication</string>
+    <string name="not_support_fingerprint">Your device doesn\'t support fingerprint authentication.</string>
     <string name="enable_lock">Please enable lock screen security in your device\'s settings to proceed.</string>
-    <string name="no_finger_registered">No fingerprint configured. Please register at least one fingerprint in your device\'s Settings</string>
+    <string name="no_finger_registered">No fingerprint configured. Please register at least one fingerprint in your device\'s Settings.</string>
     <string name="active_subscription">Active Subscription</string>
     <string name="active_services">Active Services</string>
     <string name="expire">Subscription Expire - 09 April 2020</string>
     <string name="support">Support</string>
     <string name="report_a_problem">Report a problem</string>
+    <string name="device_health_test_result">Device Health Test Result</string>
+    <string name="address">Address</string>
+    <string name="pin_code">Pin Code</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="device_name">Device Name</string>
+    <string name="storage_size">Storage Size</string>
+    <string name="device_imei">Device IMEI</string>
+    <string name="register">Register</string>
+    <string name="spot_check">Spot check</string>
+    <string name="spotcheck_details">You will decide what to test from a variety of options.</string>
+    <string name="auto_checkup">Auto checkup</string>
+    <string name="autocheckup_details">The system automatically checks through the series of test options.</string>
+    <string name="what_type_of_test_do_you_want_to_run">What type of test do you want to run?</string>
 
 </resources>

@@ -12,10 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.sentinel.HealthCheck.Connectivity.TestCellular;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
+import static com.android.sentinel.HealthCheck.TestFragment.EARPHONE;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
+import static com.android.sentinel.HealthCheck.TestFragment.MIC;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.VIBRATOR;
@@ -43,21 +47,48 @@ public class TestVibration extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(VIBRATOR, SUCCESS, context);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(EARPHONE)) {
+                        Intent intent = new Intent(TestVibration.this, TestCellular.class);
+                        intent.putExtra(FROM, VIBRATOR);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
         fail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setDefaults(VIBRATOR, FAILED, context);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(EARPHONE)) {
+                        Intent intent = new Intent(TestVibration.this, TestCellular.class);
+                        intent.putExtra(FROM, VIBRATOR);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setDefaults(VIBRATOR, UNCHECKED, context);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(EARPHONE)) {
+                        Intent intent = new Intent(TestVibration.this, TestCellular.class);
+                        intent.putExtra(FROM, VIBRATOR);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
 

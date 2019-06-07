@@ -25,6 +25,8 @@ import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FINGERPRINT;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.REQUEST_IMAGE_CAPTURE;
 import static com.android.sentinel.HealthCheck.TestFragment.SECONDARY_CAMERA;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
@@ -66,7 +68,17 @@ public class SecondaryCameraEntry extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(SECONDARY_CAMERA, UNCHECKED, context);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(FINGERPRINT)) {
+                        Intent intent = new Intent(SecondaryCameraEntry.this,
+                                PrimaryCamEntry.class);
+                        intent.putExtra(FROM, SECONDARY_CAMERA);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
     }
@@ -130,7 +142,17 @@ public class SecondaryCameraEntry extends AppCompatActivity {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                 } else {
                     Toast.makeText(context, "Permission was denied ", Toast.LENGTH_SHORT).show();
-                    finish();
+                    if (getIntent().getExtras() != null) {
+                        String val = getIntent().getStringExtra(FROM);
+                        if (val.equals(FINGERPRINT)) {
+                            Intent intent = new Intent(SecondaryCameraEntry.this,
+                                    PrimaryCamEntry.class);
+                            intent.putExtra(FROM, SECONDARY_CAMERA);
+                            startActivity(intent);
+                        }
+                    } else {
+                        finish();
+                    }
                 }
                 return;
             }
@@ -159,19 +181,48 @@ public class SecondaryCameraEntry extends AppCompatActivity {
 
     private void setPass() {
         setDefaults(SECONDARY_CAMERA, SUCCESS, context);
-        finish();
+        if (getIntent().getExtras() != null) {
+            String val = getIntent().getStringExtra(FROM);
+            if (val.equals(FINGERPRINT)) {
+                Intent intent = new Intent(SecondaryCameraEntry.this,
+                        PrimaryCamEntry.class);
+                intent.putExtra(FROM, SECONDARY_CAMERA);
+                startActivity(intent);
+            }
+        } else {
+            finish();
+        }
     }
 
     private void setFail() {
         setDefaults(SECONDARY_CAMERA, FAILED, context);
-        finish();
+        if (getIntent().getExtras() != null) {
+            String val = getIntent().getStringExtra(FROM);
+            if (val.equals(FINGERPRINT)) {
+                Intent intent = new Intent(SecondaryCameraEntry.this,
+                        PrimaryCamEntry.class);
+                intent.putExtra(FROM, SECONDARY_CAMERA);
+                startActivity(intent);
+            }
+        } else {
+            finish();
+        }
     }
 
     private void cancel() {
         setDefaults(SECONDARY_CAMERA, UNCHECKED, context);
-        Intent intent = new Intent(SecondaryCameraEntry.this, HealthCheck.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
+        if (getIntent().getExtras() != null) {
+            String val = getIntent().getStringExtra(FROM);
+            if (val.equals(FINGERPRINT)) {
+                Intent intent = new Intent(SecondaryCameraEntry.this,
+                        PrimaryCamEntry.class);
+                intent.putExtra(FROM, SECONDARY_CAMERA);
+                startActivity(intent);
+            }
+        } else {
+            finish();
+        }
+
     }
 
 

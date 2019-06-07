@@ -1,30 +1,37 @@
 package com.android.sentinel.HealthCheck;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.sentinel.HealthCheck.Audio.TestEarphone;
+import com.android.sentinel.HealthCheck.Audio.TestMicrophone;
 import com.android.sentinel.HealthCheck.Audio.TestReceiver;
 import com.android.sentinel.HealthCheck.Audio.TestSpeaker;
 import com.android.sentinel.HealthCheck.Audio.TestVibration;
 import com.android.sentinel.HealthCheck.Battery.TestBattery;
-import com.android.sentinel.HealthCheck.Camera.TestFlash;
 import com.android.sentinel.HealthCheck.Buttons.TestHomeButton;
 import com.android.sentinel.HealthCheck.Buttons.TestPower;
 import com.android.sentinel.HealthCheck.Buttons.TestVolume;
 import com.android.sentinel.HealthCheck.Camera.PrimaryCamEntry;
 import com.android.sentinel.HealthCheck.Camera.SecondaryCameraEntry;
+import com.android.sentinel.HealthCheck.Camera.TestFlash;
 import com.android.sentinel.HealthCheck.Connectivity.TestBluetooth;
 import com.android.sentinel.HealthCheck.Connectivity.TestCellular;
 import com.android.sentinel.HealthCheck.Connectivity.TestCharging;
@@ -35,9 +42,9 @@ import com.android.sentinel.HealthCheck.Display.MulitouchEntry;
 import com.android.sentinel.HealthCheck.Display.TestDimming;
 import com.android.sentinel.HealthCheck.Display.TouchscreenEntry;
 import com.android.sentinel.HealthCheck.Sensor.TestCompass;
+import com.android.sentinel.HealthCheck.Sensor.TestFingerPrint;
 import com.android.sentinel.HealthCheck.Sensor.TestSensor;
 import com.android.sentinel.R;
-import com.android.sentinel.HealthCheck.Sensor.TestFingerPrint;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -83,6 +90,7 @@ public class TestFragment extends Fragment {
     public static final String RECEIVER = "receiver";
     /*====================================================================*/
     public static final int REQUEST_IMAGE_CAPTURE = 1;
+    public static final String FROM = "from";
     List<String> groupBattery;
     List<String> groupDisplay;
     List<String> groupButton;
@@ -100,6 +108,7 @@ public class TestFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -176,10 +185,10 @@ public class TestFragment extends Fragment {
                     } else if (childPosition == 2) {
                         Intent intentReceiver = new Intent(getActivity(), TestReceiver.class);
                         startActivity(intentReceiver);
-//                    }else if (childPosition == 3) {
-//                      //  Intent intentMic = new Intent(getActivity(), TestMicrophone.class);
-//                       // startActivity(intentMic);
                     } else if (childPosition == 3) {
+                        Intent intentMic = new Intent(getActivity(), TestMicrophone.class);
+                        startActivity(intentMic);
+                    } else if (childPosition == 4) {
                         Intent intentVibration = new Intent(getActivity(), TestVibration.class);
                         startActivity(intentVibration);
                     }
@@ -237,7 +246,7 @@ public class TestFragment extends Fragment {
         groupAudio = new ArrayList<>();
         groupAudio.add("Audio");
         groupAudio.add("Microphones and Speakers");
-        groupAudio.add("4 tests");
+        groupAudio.add("5 tests");
 
         groupConnectivity = new ArrayList<>();
         groupConnectivity.add("Connectivity");
@@ -325,7 +334,7 @@ public class TestFragment extends Fragment {
         childAudio.put("Earphone", extraEarphone);
         childAudio.put("Speaker", extraSpeaker);
         childAudio.put("Receiver", extraReceiver);
-        //  childAudio.put("Microphone", extraMic);
+        childAudio.put("Microphone", extraMic);
         childAudio.put("Vibrator", extraVibrator);
 
 
@@ -557,6 +566,6 @@ public class TestFragment extends Fragment {
         }
     }
 
-//
+
 
 }

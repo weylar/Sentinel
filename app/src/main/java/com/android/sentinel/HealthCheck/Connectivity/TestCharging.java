@@ -15,10 +15,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.sentinel.HealthCheck.HealthCheck;
+import com.android.sentinel.HealthCheck.Sensor.TestCompass;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.CHARGING;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
+import static com.android.sentinel.HealthCheck.TestFragment.HEADPHONE;
+import static com.android.sentinel.HealthCheck.TestFragment.NETWORK;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -49,13 +53,31 @@ public class TestCharging extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(CHARGING, UNCHECKED, TestCharging.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(HEADPHONE)) {
+                        Intent intent = new Intent(TestCharging.this, TestCompass.class);
+                        intent.putExtra(FROM, CHARGING);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
         move.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(HEADPHONE)) {
+                        Intent intent = new Intent(TestCharging.this, TestCompass.class);
+                        intent.putExtra(FROM, CHARGING);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
     }

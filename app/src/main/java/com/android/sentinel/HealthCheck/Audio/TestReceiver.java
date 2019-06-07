@@ -21,7 +21,10 @@ import com.android.sentinel.R;
 import java.io.IOException;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FLASH;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.RECEIVER;
+import static com.android.sentinel.HealthCheck.TestFragment.SPEAKER;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -49,7 +52,16 @@ public class TestReceiver extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(RECEIVER, UNCHECKED, TestReceiver.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(SPEAKER)) {
+                        Intent intent = new Intent(TestReceiver.this, TestMicrophone.class);
+                        intent.putExtra(FROM, RECEIVER);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
     }
@@ -93,12 +105,30 @@ public class TestReceiver extends AppCompatActivity {
 
     public void passAction(View view) {
         setDefaults(RECEIVER, SUCCESS, TestReceiver.this);
-        finish();
+        if (getIntent().getExtras() != null) {
+            String val = getIntent().getStringExtra(FROM);
+            if (val.equals(SPEAKER)) {
+                Intent intent = new Intent(TestReceiver.this, TestMicrophone.class);
+                intent.putExtra(FROM, RECEIVER);
+                startActivity(intent);
+            }
+        }else {
+            finish();
+        }
     }
 
     public void failAction(View view) {
         setDefaults(RECEIVER, FAILED, TestReceiver.this);
-        finish();
+        if (getIntent().getExtras() != null) {
+            String val = getIntent().getStringExtra(FROM);
+            if (val.equals(SPEAKER)) {
+                Intent intent = new Intent(TestReceiver.this, TestMicrophone.class);
+                intent.putExtra(FROM, RECEIVER);
+                startActivity(intent);
+            }
+        }else {
+            finish();
+        }
     }
 
     private void warnRemoveHeadphone() {

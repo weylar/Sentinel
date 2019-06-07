@@ -25,9 +25,12 @@ import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
+import static com.android.sentinel.HealthCheck.TestFragment.MULTITOUCH;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.TOUCHSCREEN;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
+import static com.android.sentinel.HealthCheck.TestFragment.VOLUME;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
 
 public class TestTouch extends AppCompatActivity {
@@ -199,8 +202,6 @@ public class TestTouch extends AppCompatActivity {
 
     }
 
-
-
     public class CustomDialog extends Dialog
             implements android.view.View.OnClickListener {
 
@@ -232,16 +233,24 @@ public class TestTouch extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.yes:
-                    Intent intentYes = new Intent(TestTouch.this, TouchscreenEntry.class);
-                    intentYes.putExtra("FROM_TOUCH", "yes");
-                    startActivity(intentYes);
                     setDefaults(TOUCHSCREEN, SUCCESS, TestTouch.this);
+                    Intent intentYes = new Intent(TestTouch.this, TouchscreenEntry.class);
+                    intentYes.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP );
+                    intentYes.putExtra("FROM_TOUCH", "yes");
+                    if (getIntent().getStringExtra(FROM) != null)
+                    {intentYes.putExtra(FROM, MULTITOUCH);}
+                    startActivity(intentYes);
+
                     break;
                 case R.id.no:
-                    Intent intentNo = new Intent(TestTouch.this, TouchscreenEntry.class);
-                    intentNo.putExtra("FROM_TOUCH", "yes");
-                    startActivity(intentNo);
                     setDefaults(TOUCHSCREEN, FAILED, TestTouch.this);
+                    Intent intentNo = new Intent(TestTouch.this, TouchscreenEntry.class);
+                    intentNo.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentNo.putExtra("FROM_TOUCH", "yes");
+                    if (getIntent().getStringExtra(FROM) != null)
+                    {intentNo.putExtra(FROM, MULTITOUCH);}
+                    startActivity(intentNo);
+
                     break;
                 default:
                     break;

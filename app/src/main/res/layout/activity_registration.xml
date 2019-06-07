@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ScrollView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
@@ -13,6 +8,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="170dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_gravity="center"
@@ -20,11 +16,11 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:contentDescription="accountImage"
                 android:layout_marginTop="100dp"
-                android:src="@drawable/account_100px" />
+                android:src="@drawable/app_logo" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -40,6 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:gravity="center_horizontal"
                 android:text="@string/personal_information" />
 
             <EditText
@@ -78,49 +75,125 @@
                 android:inputType="phone"
                 android:padding="10dp" />
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/radial_background"
+                android:hint="@string/address"
+                android:inputType="textCapWords"
+                android:padding="10dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/radial_background"
+                android:hint="@string/pin_code"
+                android:inputType="numberPassword"
+                android:padding="10dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/radial_background"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:padding="10dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/radial_background"
+                android:hint="@string/repeat_password"
+                android:inputType="textPassword"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/deviceName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/radial_background"
+                android:hint="@string/device_name"
+                android:inputType="text"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/storageSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/radial_background"
+                android:hint="@string/storage_size"
+                android:inputType="text"
+                android:padding="10dp" />
+
+            <EditText
+                android:id="@+id/deviceImei"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/radial_background"
+                android:hint="@string/device_imei"
+                android:inputType="number"
+                android:padding="10dp" />
 
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="5dp"
-                android:background="@color/colorPrimary"
-                android:text="@string/login_to_existing_account"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/radial_background_red"
+                android:text="@string/register"
                 android:textColor="@color/white" />
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/grey" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="or" />
+
+                <View
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:onClick="login"
+                android:text="Login to an existing account"
+                android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
     </ScrollView>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="10dp"
-            android:text="1 of 3"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="10dp"
-            android:text="Next"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-    </RelativeLayout>
-
-</RelativeLayout>
 
 
 

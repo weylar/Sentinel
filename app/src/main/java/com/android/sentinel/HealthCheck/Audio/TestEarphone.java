@@ -18,6 +18,8 @@ import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.EARPHONE;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
+import static com.android.sentinel.HealthCheck.TestFragment.MIC;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -51,7 +53,16 @@ public class TestEarphone extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(EARPHONE, UNCHECKED, TestEarphone.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(MIC)) {
+                        Intent intent = new Intent(TestEarphone.this, TestVibration.class);
+                        intent.putExtra(FROM, EARPHONE);
+                        startActivity(intent);
+                    }
+                } else {
+                    finish();
+                }
             }
         });
     }
@@ -81,7 +92,7 @@ public class TestEarphone extends AppCompatActivity {
         mp = MediaPlayer.create(TestEarphone.this, R.raw.audio_playback);
         mp.setLooping(true);
         IntentFilter receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
-         receiver = new HeadsetStateReceiver();
+        receiver = new HeadsetStateReceiver();
         registerReceiver(receiver, receiverFilter);
     }
 
@@ -117,8 +128,6 @@ public class TestEarphone extends AppCompatActivity {
                     explain.setText(getResources().getString(R.string.earphone_details_dialog));
                     start.setVisibility(View.VISIBLE);
 
-
-
                 }
             }
         }
@@ -148,12 +157,30 @@ public class TestEarphone extends AppCompatActivity {
 
     public void passAction(View view) {
         setDefaults(EARPHONE, SUCCESS, TestEarphone.this);
-        finish();
+        if (getIntent().getExtras() != null) {
+            String val = getIntent().getStringExtra(FROM);
+            if (val.equals(MIC)) {
+                Intent intent = new Intent(TestEarphone.this, TestVibration.class);
+                intent.putExtra(FROM, EARPHONE);
+                startActivity(intent);
+            }
+        } else {
+            finish();
+        }
     }
 
     public void failAction(View view) {
         setDefaults(EARPHONE, FAILED, TestEarphone.this);
-        finish();
+        if (getIntent().getExtras() != null) {
+            String val = getIntent().getStringExtra(FROM);
+            if (val.equals(MIC)) {
+                Intent intent = new Intent(TestEarphone.this, TestVibration.class);
+                intent.putExtra(FROM, EARPHONE);
+                startActivity(intent);
+            }
+        } else {
+            finish();
+        }
     }
 
 }

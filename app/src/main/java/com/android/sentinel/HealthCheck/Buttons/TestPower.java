@@ -12,11 +12,15 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.sentinel.HealthCheck.Camera.PrimaryCamEntry;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.POWER;
+import static com.android.sentinel.HealthCheck.TestFragment.PRIMARY_CAMERA;
+import static com.android.sentinel.HealthCheck.TestFragment.SECONDARY_CAMERA;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -47,7 +51,17 @@ public class TestPower extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 setDefaults(POWER, UNCHECKED, TestPower.this);
-                finish();
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(PRIMARY_CAMERA)) {
+                        Intent intent = new Intent(TestPower.this,
+                                TestHomeButton.class);
+                        intent.putExtra(FROM, POWER);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
 
@@ -112,8 +126,8 @@ public class TestPower extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onPause() {
+        super.onPause();
         unregisterReceiver(powerDetect);
         handler.removeCallbacks(timerTask);
     }
@@ -142,18 +156,20 @@ public class TestPower extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TestPower.this, HealthCheck.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(PRIMARY_CAMERA)) {
+                        Intent intent = new Intent(TestPower.this,
+                                TestHomeButton.class);
+                        intent.putExtra(FROM, POWER);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setDefaults(POWER, UNCHECKED, TestPower.this);
-                finish();
-            }
-        });
+
     }
 
     private void setPass(Context context) {
@@ -169,9 +185,17 @@ public class TestPower extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TestPower.this, HealthCheck.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                startActivity(intent);
+                if (getIntent().getExtras() != null) {
+                    String val = getIntent().getStringExtra(FROM);
+                    if (val.equals(PRIMARY_CAMERA)) {
+                        Intent intent = new Intent(TestPower.this,
+                                TestHomeButton.class);
+                        intent.putExtra(FROM, POWER);
+                        startActivity(intent);
+                    }
+                }else {
+                    finish();
+                }
             }
         });
     }
