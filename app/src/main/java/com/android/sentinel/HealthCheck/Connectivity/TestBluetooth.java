@@ -201,6 +201,7 @@ public class TestBluetooth extends AppCompatActivity {
             filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
             filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
             registerReceiver(mReceiver, filter);
+            if (mBluetoothAdapter != null)
             mBluetoothAdapter.startDiscovery();
         }
     }

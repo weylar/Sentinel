@@ -2,32 +2,33 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.android.sentinel">
-    <!-- Vibration Permission -->
+
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
-    <uses-permission android:name="android.permission.VIBRATE" /> <!-- Network permission -->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- Network permission -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Bluetooth permission -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- WIFI Permission -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Allows to use android camera feature -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true" /> <!-- Flash light permission -->
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- Allows access to the flashlight -->
+        android:required="true" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
     <permission
         android:name="android.permission.FLASHLIGHT"
         android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"
         android:protectionLevel="normal" />
 
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
 
     <application
         android:allowBackup="true"
@@ -37,6 +38,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity android:name=".HealthResult"
             android:label="Device Health Result"
             android:parentActivityName=".Home"
@@ -113,10 +115,10 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".HealthCheck.Audio.TestMicrophone"
             android:configChanges="orientation"
@@ -269,13 +271,6 @@
             android:label="Flashlight"
             android:screenOrientation="portrait" />
 
-        <receiver android:name=".HealthCheck.Battery.TestBattery$isCharging" />
-        <receiver android:name=".HealthCheck.Connectivity.TestCellular$NetworkChangeReceiver" />
-        <receiver android:name=".HealthCheck.Connectivity.TestHeadphoneJack$HeadsetStateReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.HEADSET_PLUG" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

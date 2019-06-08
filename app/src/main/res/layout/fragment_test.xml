@@ -1,4 +1,4 @@
-<LinearLayout android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
@@ -6,6 +6,64 @@
     <ExpandableListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"/>
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:padding="10dp"
+        android:background="@color/colorPrimary">
+
+
+        <TextView
+            android:id="@+id/pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pass 10"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textSize="15dp"
+            android:layout_marginEnd="10dp"
+            android:textStyle="bold"
+            android:textColor="@color/green"
+            android:layout_centerVertical="true"
+            android:background="@drawable/round_background_red"
+            />
+
+        <TextView
+            android:id="@+id/fail"
+            android:layout_toEndOf="@+id/pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:textSize="15dp"
+            android:background="@drawable/round_background_red"
+            android:text="Fail 10"
+            android:textColor="@color/red"/>
+
+        <TextView
+            android:id="@+id/result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:drawableEnd="@drawable/ic_chevron_right_black_24dp"
+            android:text="Results"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

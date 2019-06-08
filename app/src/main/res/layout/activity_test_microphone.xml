@@ -7,100 +7,106 @@
     android:background="@drawable/gradient_background">
 
     <android.support.v7.widget.CardView
+        android:layout_above="@+id/start_skip"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="20dp"
         app:cardElevation="5dp"
         app:cardCornerRadius="15dp">
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/dialog"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="25dp"
-                android:gravity="center_horizontal"
-                android:text="@string/mic_dialog"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="25dp"
+                    android:textStyle="bold"
+                    android:gravity="center_horizontal"
+                    android:text="@string/mic_dialog"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_below="@id/dialog"
-                android:layout_centerHorizontal="true"
-                android:contentDescription="@string/item_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_background_red"
-                android:src="@drawable/mic_50px" />
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_below="@id/dialog"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/item_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_background_red"
+                    android:src="@drawable/mic_50px" />
 
-            <TextView
-                android:id="@+id/explain"
-                android:layout_below="@+id/image"
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textColor="@color/black"
-                android:text="@string/earphone_details_dialog"
-                android:textAlignment="center" />
-
-
-            <TextView
-                android:id="@+id/insertEarpiece"
-                android:layout_below="@+id/explain"
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:layout_marginTop="10dp" />
-
-            <TextView
-                android:id="@+id/recorder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/insertEarpiece"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/black"
-                android:visibility="gone" />
-
-            <com.jjoe64.graphview.GraphView
-                android:id="@+id/graph"
-                android:layout_below="@+id/recorder"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:visibility="gone"
-                android:layout_margin="10dp"/>
-
-            <TextView
-                android:id="@+id/result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/graph"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="10dp"
-                android:textColor="@color/green"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                tools:text="Pass" />
-
-            <ProgressBar
-                android:id="@+id/progress"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/result"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="10dp"
-                android:visibility="gone" />
+                <TextView
+                    android:id="@+id/explain"
+                    android:layout_below="@+id/image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/black"
+                    android:text="@string/earphone_details_dialog"
+                    android:textAlignment="center" />
 
 
-        </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/recorder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/explain"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/black"
+                    tools:text="Amplitude - 400"
+                    android:textSize="20dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/insertEarpiece"
+                    android:layout_below="@+id/recorder"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="match_parent"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_margin="10dp" />
+
+
+                <TextView
+                    android:id="@+id/result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/insertEarpiece"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/green"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    tools:text="Pass" />
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/result"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
+                    android:visibility="gone" />
+
+
+            </RelativeLayout>
+        </ScrollView>
+
 
     </android.support.v7.widget.CardView>
 

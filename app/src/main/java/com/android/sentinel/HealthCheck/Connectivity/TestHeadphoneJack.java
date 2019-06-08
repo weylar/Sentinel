@@ -7,11 +7,13 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
@@ -31,6 +33,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
     Handler handler;
     ProgressBar progressBar;
     HeadsetStateReceiver receiver;
+    IntentFilter receiverFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +102,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         handler = new Handler();
-        IntentFilter receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+        receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         receiver = new HeadsetStateReceiver();
         registerReceiver( receiver, receiverFilter );
         runProgress();
@@ -107,13 +110,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unregisterReceiver(receiver);
-        handler.removeCallbacks(timerTask);
 
-    }
 
     private void runProgress() {
         Thread thread = new Thread() {
@@ -167,6 +164,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
         skip.setVisibility(View.GONE);
         move.setVisibility(View.VISIBLE);
         handler.removeCallbacks(timerTask);
+        unregisterReceiver(receiver);
     }
 
     private void failAction() {
@@ -178,6 +176,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         move.setVisibility(View.VISIBLE);
         skip.setVisibility(View.GONE);
+        unregisterReceiver(receiver);
         handler.removeCallbacks(timerTask);
     }
 
@@ -191,6 +190,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
                 int headSetState = intent.getIntExtra("state", 0);
                 if (headSetState == 0) {
                     warnNoHeadphone();
+
                 }else{
                     passAction();
                 }

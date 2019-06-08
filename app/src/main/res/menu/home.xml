@@ -10,10 +10,7 @@
         android:id="@+id/sign"
         android:title="Sign Up"
         app:showAsAction="never"/>
-    <item
-        android:id="@+id/result"
-        android:title="Show result"
-        app:showAsAction="never"/>
+
     <item
         android:id="@+id/about"
         android:title="@string/about"

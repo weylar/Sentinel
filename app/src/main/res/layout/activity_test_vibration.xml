@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background">
 
     <android.support.v7.widget.CardView
+        android:layout_above="@+id/start_skip"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="20dp"
         app:cardElevation="5dp"
         android:layout_centerInParent="true"
         app:cardCornerRadius="15dp">
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/dialog"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/vibrate_dialog"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:gravity="center_horizontal"
-                android:layout_margin="25dp"/>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/vibrate_dialog"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center_horizontal"
+                    android:layout_margin="15dp"/>
 
                 <ImageView
                     android:id="@+id/image"
@@ -48,12 +53,16 @@
                     android:text="@string/vibrate_dialog_detail"
                     android:textAlignment="center"/>
 
-        </RelativeLayout>
+            </RelativeLayout>
+
+        </ScrollView>
+
 
 
     </android.support.v7.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/start_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"

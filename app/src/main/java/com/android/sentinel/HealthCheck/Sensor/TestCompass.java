@@ -129,7 +129,6 @@ public class TestCompass extends AppCompatActivity implements SensorEventListene
             compassState.setVisibility(View.VISIBLE);
             compassStateDetail.setVisibility(View.VISIBLE);
             compassState.setText("Heading: " + (int) azimuthInDegress + " degrees");
-            compassStateDetail.setText("Radian: " + (int) azimuthInRadians);
             mCurrentDegree = -azimuthInDegress;
         }
 

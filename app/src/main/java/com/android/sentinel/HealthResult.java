@@ -1,6 +1,7 @@
 package com.android.sentinel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.sentinel.HealthCheck.HealthCheck;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import static com.android.sentinel.HealthCheck.TestFragment.BATTERY;
@@ -54,10 +56,17 @@ public class HealthResult extends AppCompatActivity {
         setContentView(R.layout.activity_health_result);
         donutProgress = findViewById(R.id.progress);
         donutProgress.setProgress((int)calcPercentage());
-        listView = findViewById(R.id.list);
+        listView = findViewById(R.id.listview);
         ResultAdapter resultAdapter = new ResultAdapter(this,
                 getResults(), getTestNames(), getIcon());
         listView.setAdapter(resultAdapter);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, HealthCheck.class));
     }
 
     /*Super magical method that calculates result percentage*/
@@ -66,8 +75,10 @@ public class HealthResult extends AppCompatActivity {
 
     }
 
+
+
     /*My magical Method that calculates my result based on values gotten, Bolade you can use this too*/
-    private int  calculateResult(){
+    public int  calculateResult(){
         int result = 0;
         for (int i = 0; i < getResults().length; i++){
             if (getResults()[i] == SUCCESS){

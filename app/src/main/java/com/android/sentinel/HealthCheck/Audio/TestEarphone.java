@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -89,6 +90,10 @@ public class TestEarphone extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        /*Increase device volume*/
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
         mp = MediaPlayer.create(TestEarphone.this, R.raw.audio_playback);
         mp.setLooping(true);
         IntentFilter receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);

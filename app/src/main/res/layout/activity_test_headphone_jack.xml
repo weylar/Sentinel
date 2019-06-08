@@ -11,83 +11,90 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/start_skip"
         android:layout_margin="20dp"
         android:layout_centerInParent="true"
         app:cardCornerRadius="15dp"
         app:cardElevation="5dp">
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/dialog"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="25dp"
-                android:gravity="center_horizontal"
-                android:text="@string/headphone_jack_dialog"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="25dp"
+                    android:textStyle="bold"
+                    android:gravity="center_horizontal"
+                    android:text="@string/headphone_jack_dialog"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_below="@+id/dialog"
-                android:layout_centerHorizontal="true"
-                android:contentDescription="@string/item_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_background_red"
-                android:src="@drawable/port_50px" />
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/dialog"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/round_background_red"
+                    android:contentDescription="@string/item_description"
+                    android:src="@drawable/port_50px" />
 
-            <TextView
-                android:id="@+id/explain"
-                android:layout_below="@+id/image"
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="@string/headphone_dialog_detail"
-                android:textAlignment="center"
-                android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/explain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="5dp"
+                    android:text="@string/headphone_dialog_detail"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
 
-            <TextView
-                android:id="@+id/reason"
-                android:layout_below="@id/explain"
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:visibility="gone"
-                android:textAlignment="center"
-                android:textColor="@color/black" />
-
-
-            <TextView
-                android:id="@+id/result"
-                android:layout_below="@id/reason"
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textColor="@color/green"
-                android:textSize="40sp"
-                android:textStyle="bold"
-                tools:text="Pass" />
-
-            <ProgressBar
-                android:id="@+id/progress"
-                android:layout_below="@+id/result"
-                android:layout_centerHorizontal="true"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp" />
+                <TextView
+                    android:id="@+id/reason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/explain"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="5dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:visibility="gone" />
 
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/reason"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/green"
+                    android:textSize="40sp"
+                    android:textStyle="bold"
+                    tools:text="Pass" />
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/result"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp" />
+
+
+            </RelativeLayout>
+        </ScrollView>
 
 
     </android.support.v7.widget.CardView>
@@ -102,7 +109,7 @@
 
         <Button
             android:id="@+id/move"
-            android:layout_width="150dp"
+            android:layout_width="150sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"

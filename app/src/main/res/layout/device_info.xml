@@ -30,7 +30,7 @@
             android:layout_margin="10dp"
             android:textColor="@color/black"
             android:textSize="17sp"
-            tools:text="@string/general_info" />
+            android:lineSpacingExtra="12dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -51,6 +51,7 @@
             android:layout_margin="10dp"
             android:textColor="@color/black"
             android:textSize="17sp"
+            android:lineSpacingExtra="12dp"
             tools:text="@string/general_info" />
 
 

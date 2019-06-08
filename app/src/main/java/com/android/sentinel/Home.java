@@ -27,6 +27,9 @@ import android.widget.TextView;
 
 import com.android.sentinel.HealthCheck.HealthCheck;
 
+import static com.android.sentinel.HealthCheck.TestFragment.FROM;
+import static com.android.sentinel.HealthCheck.TestFragment.HOME;
+
 public class Home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -72,6 +75,7 @@ public class Home extends AppCompatActivity
 
     public void healthCheck(View view) {
         Intent intent = new Intent(Home.this, HealthCheck.class);
+        intent.putExtra(FROM, HOME);
         startActivity(intent);
 
     }
@@ -145,9 +149,6 @@ public class Home extends AppCompatActivity
         } else if (id == R.id.sign) {
             startActivity(new Intent(this, Registration.class));
             return true;
-        }else if (id == R.id.result) {
-            startActivity(new Intent(this, HealthResult.class));
-            return true;
         } else if (id == R.id.about) {
             startActivity(new Intent(this, About.class));
             return true;
@@ -171,6 +172,7 @@ public class Home extends AppCompatActivity
 
         if (id == R.id.nav_check_health) {
             Intent intent = new Intent(Home.this, HealthCheck.class);
+            intent.putExtra(FROM, HOME);
             startActivity(intent);
         } else if (id == R.id.nav_claim) {
             Intent intent = new Intent(Home.this, Claim.class);

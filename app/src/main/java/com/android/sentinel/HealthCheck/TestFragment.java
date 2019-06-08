@@ -1,23 +1,17 @@
 package com.android.sentinel.HealthCheck;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.sentinel.HealthCheck.Audio.TestEarphone;
@@ -44,6 +38,7 @@ import com.android.sentinel.HealthCheck.Display.TouchscreenEntry;
 import com.android.sentinel.HealthCheck.Sensor.TestCompass;
 import com.android.sentinel.HealthCheck.Sensor.TestFingerPrint;
 import com.android.sentinel.HealthCheck.Sensor.TestSensor;
+import com.android.sentinel.HealthResult;
 import com.android.sentinel.R;
 
 import java.util.ArrayList;
@@ -102,6 +97,8 @@ public class TestFragment extends Fragment {
     List<List<String>> group;
     ExpandableListView listView;
     ListAdapter adapter;
+    TextView result, pass, fail;
+
 
 
 
@@ -115,12 +112,75 @@ public class TestFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_test, container, false);
         listView = view.findViewById(R.id.list);
+        result = view.findViewById(R.id.result);
+        pass = view.findViewById(R.id.pass);
+        fail = view.findViewById(R.id.fail);
+
+        result.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), HealthResult.class));
+            }
+        });
+
+
         return view;
+    }
+    public int calculateResultPass(){
+        int result = 0;
+        for (int i = 0; i < getResults().length; i++){
+            if (getResults()[i] == SUCCESS){
+                result++;
+            }
+
+        }
+        return result;
+    }
+    public int  calculateResultFail(){
+        int result = 0;
+        for (int i = 0; i < getResults().length; i++){
+            if (getResults()[i] == FAILED){
+                result++;
+            }
+
+        }
+        return result;
+    }
+    private int[] getResults() {
+        int[] result = {getDefaults(BATTERY, getActivity()),
+                getDefaults(DIMMING, getActivity()),
+                getDefaults(FLASH, getActivity()),
+                getDefaults(SPEAKER, getActivity()),
+                getDefaults(RECEIVER, getActivity()),
+                getDefaults(MIC, getActivity()),
+                getDefaults(EARPHONE, getActivity()),
+                getDefaults(VIBRATOR, getActivity()),
+                getDefaults(NETWORK, getActivity()),
+                getDefaults(HEADPHONE, getActivity()),
+                getDefaults(CHARGING, getActivity()),
+                getDefaults(COMPASS, getActivity()),
+                getDefaults(SENSOR, getActivity()),
+                getDefaults(FINGERPRINT, getActivity()),
+                getDefaults(SECONDARY_CAMERA, getActivity()),
+                getDefaults(PRIMARY_CAMERA, getActivity()),
+                getDefaults(POWER, getActivity()),
+                getDefaults(HOME, getActivity()),
+                getDefaults(VOLUME, getActivity()),
+                getDefaults(MULTITOUCH, getActivity()),
+                getDefaults(TOUCHSCREEN, getActivity()),
+                getDefaults(DISPLAY, getActivity()),
+                getDefaults(BLUETOOTH, getActivity()),
+                getDefaults(WIFI, getActivity())
+        };
+
+        return result;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        pass.setText("Pass  (" + calculateResultPass() + ")");
+        fail.setText("Fail  (" + calculateResultFail() + ")");
         getData();
         adapter = new ListAdapter(getActivity());
         adapter.notifyDataSetChanged();
@@ -227,6 +287,9 @@ public class TestFragment extends Fragment {
             }
         });
     }
+
+
+
 
 
 

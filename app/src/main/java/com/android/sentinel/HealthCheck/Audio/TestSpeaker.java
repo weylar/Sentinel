@@ -4,14 +4,17 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
@@ -25,11 +28,13 @@ import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
 
 public class TestSpeaker extends AppCompatActivity {
-    TextView skip, insertEarpiece, explain;
-    Button start;
+    private static final String TAG = "tag";
+    TextView insertEarpiece, explain;
+    Button start, skip;
     LinearLayout pass_fail, skip_start;
     MediaPlayer mp;
     HeadsetStateReceiver receiver;
+    IntentFilter receiverFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +90,10 @@ public class TestSpeaker extends AppCompatActivity {
         super.onResume();
         mp = MediaPlayer.create(TestSpeaker.this, R.raw.audio_playback);
         mp.setLooping(true);
-        IntentFilter receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+        receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         receiver = new HeadsetStateReceiver();
         registerReceiver(receiver, receiverFilter);
+
     }
 
     @Override
@@ -112,6 +118,10 @@ public class TestSpeaker extends AppCompatActivity {
     }
 
     private void startPlayback() {
+        /*Increase device volume*/
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
         mp.start();
         explain.setText(getResources().getString(R.string.now_playing));
         pass_fail.setVisibility(View.VISIBLE);
@@ -163,11 +173,14 @@ public class TestSpeaker extends AppCompatActivity {
                     start.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+
+
                             startPlayback();
                         }
                     });
                 } else {
                     warnRemoveHeadphone();
+
 
                 }
             }

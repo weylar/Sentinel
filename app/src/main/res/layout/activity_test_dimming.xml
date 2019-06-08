@@ -11,65 +11,73 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/start_skip"
         android:layout_margin="20dp"
         android:layout_centerInParent="true"
         app:cardElevation="5dp"
         app:cardCornerRadius="15dp">
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/dialog"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/backlight_dialog"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:gravity="center_horizontal"
-                android:layout_margin="25dp"/>
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_below="@+id/dialog"
-                android:layout_centerHorizontal="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_background_red"
-                android:src="@drawable/dim_50px" />
+                <TextView
+                    android:id="@+id/dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/backlight_dialog"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center_horizontal"
+                    android:layout_margin="25dp"/>
 
-            <TextView
-                android:layout_below="@id/image"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/brightness_level"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textColor="@color/black"
-                tools:text="Backlight brightness now set to 100%"
-                android:textAlignment="center"/>
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_below="@+id/dialog"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_background_red"
+                    android:src="@drawable/dim_50px" />
 
-            <TextView
-                android:layout_below="@id/brightness_level"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/explain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textColor="@color/black"
-                android:text="@string/diim_dialog_details"
-                android:textAlignment="center"/>
+                <TextView
+                    android:layout_below="@id/image"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/brightness_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/black"
+                    tools:text="Backlight brightness now set to 100%"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:layout_below="@id/brightness_level"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/explain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/black"
+                    android:text="@string/diim_dialog_details"
+                    android:textAlignment="center"/>
 
 
-        </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+
 
 
 
     </android.support.v7.widget.CardView>
 
     <LinearLayout
+        android:id="@+id/start_skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

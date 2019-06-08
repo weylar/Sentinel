@@ -6,150 +6,162 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/gradient_background"
-    android:weightSum="10"
-    tools:context=".HealthCheck.Battery.TestBattery">
+    android:weightSum="10">
 
     <android.support.v7.widget.CardView
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_above="@id/groupLinear"
         android:layout_margin="20dp"
-        android:layout_centerInParent="true"
         app:cardElevation="5dp"
         app:cardCornerRadius="15dp">
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/dialog"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="25dp"
-                android:gravity="center_horizontal"
-                android:text="@string/speaker_dialog"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="25dp"
+                    android:gravity="center_horizontal"
+                    android:text="@string/speaker_dialog"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_below="@id/dialog"
-                android:layout_centerHorizontal="true"
-                android:contentDescription="@string/item_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_background_red"
-                android:src="@drawable/speaker_50px" />
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dialog"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/round_background_red"
+                    android:contentDescription="@string/item_description"
+                    android:src="@drawable/speaker_50px" />
 
-            <TextView
-                android:layout_below="@id/image"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/explain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:textColor="@color/black"
-                android:textAlignment="center"/>
+                <TextView
+                    android:id="@+id/explain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/image"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="10dp"
+                    android:text="@string/earphone_details_dialog"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
 
-            <TextView
-                android:layout_below="@+id/explain"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/insertEarpiece"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:layout_margin="10dp" />
+                <TextView
+                    android:id="@+id/insertEarpiece"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/explain"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:textColor="@color/black" />
 
-        </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
 
 
     </android.support.v7.widget.CardView>
 
-    <LinearLayout
-    android:id="@+id/start_skip"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true"
-    android:orientation="horizontal">
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_margin="5dp"
-        android:background="@drawable/label_background"
-        android:drawableStart="@drawable/continue_50px"
-        android:drawablePadding="5dp"
-        android:paddingStart="0dp"
-        android:paddingTop="2dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="2dp"
-        android:text="@string/start"
-        android:textColor="@color/white" />
-
-    <Button
-        android:id="@+id/skip"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_margin="5dp"
-        android:background="@drawable/label_background_grey"
-        android:paddingStart="0dp"
-        android:paddingTop="2dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="2dp"
-        android:text="@string/skip"
-        android:textColor="@color/black" />
-
-</LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linear"
+    <RelativeLayout
+        android:id="@+id/groupLinear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:layout_centerHorizontal="true">
 
-        <Button
-            android:id="@+id/pass"
-            android:layout_width="150dp"
+        <LinearLayout
+            android:id="@+id/start_skip"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="5dp"
-            android:background="@drawable/label_background"
-            android:drawableStart="@drawable/pass_white_50px"
-            android:drawablePadding="5dp"
-            android:onClick="passAction"
-            android:paddingStart="0dp"
-            android:paddingTop="2dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="2dp"
-            android:text="@string/pass_btn"
-            android:textColor="@color/white" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/fail"
-            android:layout_width="150dp"
+            <Button
+                android:id="@+id/button"
+                android:layout_width="150sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:background="@drawable/label_background"
+                android:drawableStart="@drawable/continue_50px"
+                android:drawablePadding="5dp"
+                android:paddingStart="0dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="2dp"
+                android:text="@string/start"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/skip"
+                android:layout_width="150sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:background="@drawable/label_background_grey"
+                android:paddingStart="0dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="2dp"
+                android:text="@string/skip"
+                android:textColor="@color/black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="5dp"
-            android:background="@drawable/label_background_red"
-            android:drawableStart="@drawable/no_white_50px"
-            android:drawablePadding="5dp"
-            android:onClick="failAction"
-            android:paddingStart="0dp"
-            android:paddingTop="2dp"
-            android:paddingEnd="10dp"
-            android:paddingBottom="2dp"
-            android:text="@string/fail_btn"
-            android:textColor="@color/white" />
+            android:orientation="horizontal"
+            android:visibility="gone">
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/pass"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:background="@drawable/label_background"
+                android:drawableStart="@drawable/pass_white_50px"
+                android:drawablePadding="5dp"
+                android:onClick="passAction"
+                android:paddingStart="0dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="2dp"
+                android:text="@string/pass_btn"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/fail"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="5dp"
+                android:background="@drawable/label_background_red"
+                android:drawableStart="@drawable/no_white_50px"
+                android:drawablePadding="5dp"
+                android:onClick="failAction"
+                android:paddingStart="0dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="2dp"
+                android:text="@string/fail_btn"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

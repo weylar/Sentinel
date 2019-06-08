@@ -18,6 +18,7 @@ import com.android.sentinel.HealthCheck.Battery.TestBattery;
 import com.android.sentinel.R;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FROM;
+import static com.android.sentinel.HealthCheck.TestFragment.HOME;
 
 public class HealthCheck extends AppCompatActivity {
     FragmentPagerAdapter adapterViewPager;
@@ -36,6 +37,7 @@ public class HealthCheck extends AppCompatActivity {
         tabLayout.setupWithViewPager(vpPager);
         testFragment = new TestFragment();
         deviceInfoFragment = new DeviceInfoFragment();
+        if (getIntent().getStringExtra(FROM) != null && getIntent().getStringExtra(FROM).equals(HOME))
         showDialog();
     }
 

@@ -32,7 +32,6 @@ public class TestBattery extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_battery);
-
         batLevel = findViewById(R.id.battPercentage);
         battHealth = findViewById(R.id.batteryHealth);
         result = findViewById(R.id.result);
@@ -47,9 +46,9 @@ public class TestBattery extends AppCompatActivity {
         super.onResume();
         batLevel.setText("Battery Percentage - " + showBatPercentage() + "%");
         receiver = new isCharging();
-        IntentFilter ifilter = new IntentFilter();
-        ifilter.addAction(Intent.ACTION_BATTERY_CHANGED);
-        registerReceiver(receiver, ifilter);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
+        registerReceiver(receiver, intentFilter);
     }
 
     public void move(View view) {
@@ -94,8 +93,8 @@ public class TestBattery extends AppCompatActivity {
     }
 
     public   int showBatPercentage() {
-        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        Intent batteryStatus = registerReceiver(null, ifilter);
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        Intent batteryStatus = registerReceiver(null, intentFilter);
         int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
         int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
         float batteryPct = level / (float) scale;

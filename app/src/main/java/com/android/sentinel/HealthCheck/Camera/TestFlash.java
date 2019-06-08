@@ -182,9 +182,11 @@ public class TestFlash extends AppCompatActivity {
     }
 
     private void offFlash() {
-        cam.stopPreview();
-        cam.release();
-        cam = null;
+        if (cam != null) {
+            cam.stopPreview();
+            cam.release();
+            cam = null;
+        }
     }
 
     private void onFlash() {

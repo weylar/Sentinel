@@ -10,26 +10,31 @@
     tools:context=".HealthCheck.Battery.TestBattery">
 
     <android.support.v7.widget.CardView
+        android:layout_above="@+id/groupLinear"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_margin="20dp"
         app:cardElevation="5dp"
         app:cardCornerRadius="15dp">
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/dialog"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/earphone_dialog"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:gravity="center_horizontal"
-                android:layout_margin="25dp"/>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/dialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/earphone_dialog"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center_horizontal"
+                    android:layout_margin="25dp"/>
 
 
                 <ImageView
@@ -64,17 +69,24 @@
                     android:layout_margin="10dp" />
 
 
-        </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
+
 
     </android.support.v7.widget.CardView>
 
+<RelativeLayout
+    android:id="@+id/groupLinear"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:layout_centerHorizontal="true">
 
     <LinearLayout
         android:id="@+id/start_skip"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:orientation="horizontal">
 
         <Button
@@ -112,7 +124,6 @@
     <LinearLayout
         android:id="@+id/linear"
         android:visibility="gone"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -153,6 +164,9 @@
             android:textColor="@color/white" />
 
     </LinearLayout>
+
+
+</RelativeLayout>
 
 
 

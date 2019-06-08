@@ -38,7 +38,7 @@
             android:background="@color/grey" />
 
         <ListView
-            android:id="@+id/list"
+            android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

@@ -149,8 +149,10 @@ public class TestReceiver extends AppCompatActivity {
 
     private void startPlayback() {
         mp = new MediaPlayer();
-        AudioManager mAudioManager = ((AudioManager) getSystemService(Context.AUDIO_SERVICE));
-        mAudioManager.setSpeakerphoneOn(false);
+        AudioManager audioManager = ((AudioManager) getSystemService(Context.AUDIO_SERVICE));
+        audioManager.setSpeakerphoneOn(false);
+        audioManager.setStreamVolume(AudioManager.STREAM_VOICE_CALL,
+                audioManager.getStreamMaxVolume(AudioManager.STREAM_VOICE_CALL), 0);
         AssetFileDescriptor afd = getResources().openRawResourceFd(R.raw.audio_playback);
         if (afd == null) return;
         mp.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);

@@ -16,6 +16,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,9 +48,8 @@ public class TestMicrophone extends AppCompatActivity {
     Runnable timerTask;
     Runnable stopRecordingRunnable;
     ProgressBar progressBar;
-    GraphView graph;
     int isWorking = 2;
-    private LineGraphSeries<DataPoint> mSeries;
+
 
 
     @Override
@@ -56,7 +57,6 @@ public class TestMicrophone extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_microphone);
         getSupportActionBar().setHomeButtonEnabled(true);
-        graph = findViewById(R.id.graph);
         handler = new Handler();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         skip = findViewById(R.id.skip);
@@ -173,13 +173,11 @@ public class TestMicrophone extends AppCompatActivity {
                 AudioFormat.ENCODING_PCM_16BIT,
                 minSize);
         audioRecord.startRecording();
-        mSeries = new LineGraphSeries<>(generateData());
-        graph.addSeries(mSeries);
         start.setVisibility(View.GONE);
         insertEarpiece.setVisibility(View.GONE);
-        updateAmplitude(2);
-        autoStopRecording(10000);
-        updateProgress(1000, 10);
+        updateAmplitude(200);
+        autoStopRecording(15000);
+        updateProgress(1500, 10);
 
     }
 
@@ -191,20 +189,20 @@ public class TestMicrophone extends AppCompatActivity {
                     explain.setVisibility(View.VISIBLE);
                     explain.setText(getResources().getString(R.string.recorder));
                     recorder.setVisibility(View.VISIBLE);
-                    graph.setVisibility(View.VISIBLE);
                     recorder.setText("Amplitude - " + (int) getAmplitude());
-                    mSeries.resetData(generateData());
-                    if ((int) getAmplitude() < 600) {
+                    if ((int) getAmplitude() < 10000) {
                         insertEarpiece.setVisibility(View.VISIBLE);
+                        recorder.setTextColor(getResources().getColor(R.color.black));
                         insertEarpiece.setText("Input is low, please increase your voice");
+
                         insertEarpiece.setTextColor(getResources().getColor(R.color.colorPrimary));
 
                     } else {
                         insertEarpiece.setVisibility(View.GONE);
-                    }
-
-                    if ((int) getAmplitude() > 100) {
+                        recorder.setTextColor(getResources().getColor(R.color.green));
                         isWorking = 1;
+
+
                     }
 
                 } finally {
@@ -251,18 +249,6 @@ public class TestMicrophone extends AppCompatActivity {
         thread.start();
     }
 
-    private DataPoint[] generateData() {
-        int count = 5;
-        DataPoint[] values = new DataPoint[count];
-        for (int i = 0; i < count; i++) {
-            double x = i;
-            double y = getAmplitude();
-            DataPoint v = new DataPoint(x, y);
-            values[i] = v;
-        }
-        return values;
-    }
-
     private void stopRecording() {
         if (audioRecord != null) {
             audioRecord.stop();
@@ -286,7 +272,6 @@ public class TestMicrophone extends AppCompatActivity {
         insertEarpiece.setVisibility(View.GONE);
         recorder.setVisibility(View.GONE);
         explain.setVisibility(View.GONE);
-        graph.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         skip.setVisibility(View.GONE);
         start.setVisibility(View.VISIBLE);

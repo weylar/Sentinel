@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.sentinel.HealthCheck.Camera.PrimaryCamEntry;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
 
@@ -20,7 +19,6 @@ import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
 import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.POWER;
 import static com.android.sentinel.HealthCheck.TestFragment.PRIMARY_CAMERA;
-import static com.android.sentinel.HealthCheck.TestFragment.SECONDARY_CAMERA;
 import static com.android.sentinel.HealthCheck.TestFragment.SUCCESS;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
@@ -125,9 +123,10 @@ public class TestPower extends AppCompatActivity {
         thread.start();
     }
 
+
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         unregisterReceiver(powerDetect);
         handler.removeCallbacks(timerTask);
     }

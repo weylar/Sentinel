@@ -16,6 +16,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +32,7 @@ import android.widget.Toast;
 import com.android.sentinel.R;
 
 import java.io.File;
+import java.io.StringWriter;
 
 import static com.android.sentinel.HealthCheck.TestFragment.BATTERY;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
@@ -64,9 +70,9 @@ public class DeviceInfoFragment extends Fragment {
         battHealth = view.findViewById(R.id.battery);
         battHealth.append("(" + showBatPercentage() + "%)");
 
-        IntentFilter ifilter = new IntentFilter();
-        ifilter.addAction(Intent.ACTION_BATTERY_CHANGED);
-        getActivity().registerReceiver(receiver, ifilter);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
+        getActivity().registerReceiver(receiver, intentFilter);
     }
 
     @Override
@@ -76,8 +82,8 @@ public class DeviceInfoFragment extends Fragment {
     }
 
     public int showBatPercentage() {
-        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        Intent batteryStatus = getActivity().registerReceiver(null, ifilter);
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        Intent batteryStatus = getActivity().registerReceiver(null, intentFilter);
         int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
         int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
         float batteryPct = level / (float) scale;
@@ -176,22 +182,22 @@ public class DeviceInfoFragment extends Fragment {
 
     private void showSpecification(View view) {
         TextView textView = view.findViewById(R.id.specification);
-        //Show Device specification
-        textView.append("Model: " + Build.MODEL + "\n");
-        textView.append("Android Version: " + Build.VERSION.RELEASE + "\n");
-        textView.append("ID: " + Build.ID + "\n");
+
+        textView.append("Model:  " + Build.MODEL + "\n");
+        textView.append("Android Version:  " + Build.VERSION.RELEASE + "\n");
+        textView.append("ID:  " + Build.ID + "\n");
         textView.append("Serial: " + Build.SERIAL + "\n");
-        textView.append("Brand: " + Build.BRAND + "\n");
-        textView.append("Type: " + Build.TYPE + "\n");
-        textView.append("User: " + Build.USER + "\n");
-        textView.append("Base: " + Build.VERSION_CODES.BASE + "\n");
-        textView.append("Manufacturer: " + Build.MANUFACTURER + "\n");
-        textView.append("SDK: " + Build.VERSION.SDK + "\n");
-        textView.append("Board: " + Build.BOARD + "\n");
-        textView.append("Brand: " + Build.BRAND + "\n");
-        textView.append("Host: " + Build.HOST + "\n");
-        textView.append("Incremental: " + Build.VERSION.INCREMENTAL + "\n");
-        textView.append("Fingerprint: " + Build.FINGERPRINT + "\n");
+        textView.append("Brand:  " + Build.BRAND + "\n");
+        textView.append("Type:  " + Build.TYPE + "\n");
+        textView.append("User:  " + Build.USER + "\n");
+        textView.append("Base:  " + Build.VERSION_CODES.BASE + "\n");
+        textView.append("Manufacturer:  " + Build.MANUFACTURER + "\n");
+        textView.append("SDK:  " + Build.VERSION.SDK + "\n");
+        textView.append("Board:  " + Build.BOARD + "\n");
+        textView.append("Brand:  " + Build.BRAND + "\n");
+        textView.append("Host:  " + Build.HOST + "\n");
+        textView.append("Incremental:  " + Build.VERSION.INCREMENTAL + "\n");
+        textView.append("Fingerprint:  " + Build.FINGERPRINT + "\n");
 
     }
 
@@ -232,14 +238,14 @@ public class DeviceInfoFragment extends Fragment {
                     break;
             }
             boolean isRoaming = telephonyManager.isNetworkRoaming();
-            phoneState.append("Phone Network Type: " + phoneTypeString +  "\n");
-            phoneState.append("IMEI Number: " + telephonyManager.getDeviceId() +  "\n");
-            phoneState.append("Subscriber ID: " + telephonyManager.getDeviceId() +  "\n");
-            phoneState.append("Sim Serial Number: " + telephonyManager.getSimSerialNumber() +  "\n");
-            phoneState.append("Network Country ISO: " + telephonyManager.getNetworkCountryIso() +  "\n");
-            phoneState.append("Sim Country ISO: " + telephonyManager.getSimCountryIso() +  "\n");
-            phoneState.append("Voice Mail Number: " + telephonyManager.getVoiceMailNumber() +  "\n");
-            phoneState.append("In Roaming: " + isRoaming);
+            phoneState.append("Phone Network Type:  " + phoneTypeString +  "\n");
+            phoneState.append("IMEI Number:  " + telephonyManager.getDeviceId() +  "\n");
+            phoneState.append("Subscriber ID:  " + telephonyManager.getDeviceId() +  "\n");
+            phoneState.append("Sim Serial Number:  " + telephonyManager.getSimSerialNumber() +  "\n");
+            phoneState.append("Network Country ISO:  " + telephonyManager.getNetworkCountryIso() +  "\n");
+            phoneState.append("Sim Country ISO:  " + telephonyManager.getSimCountryIso() +  "\n");
+            phoneState.append("Voice Mail Number:  " + telephonyManager.getVoiceMailNumber() +  "\n");
+            phoneState.append("In Roaming:  " + isRoaming);
 
         }
     }
