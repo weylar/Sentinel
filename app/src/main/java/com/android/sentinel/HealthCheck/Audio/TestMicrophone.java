@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
+import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class TestMicrophone extends AppCompatActivity {
 
     TextView skip, insertEarpiece, explain, recorder, result;
     Button start;
+    IntentFilter receiverFilter;
     HeadsetStateReceiver receiver;
     Handler handler;
     AudioRecord audioRecord = null;
@@ -49,6 +51,7 @@ public class TestMicrophone extends AppCompatActivity {
     Runnable stopRecordingRunnable;
     ProgressBar progressBar;
     int isWorking = 2;
+    AudioManager audioManager;
 
 
 
@@ -113,9 +116,24 @@ public class TestMicrophone extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        IntentFilter receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+        receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         receiver = new HeadsetStateReceiver();
         registerReceiver(receiver, receiverFilter);
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager.isWiredHeadsetOn()){
+            warnRemoveHeadphone();
+
+        }else{
+            start.setVisibility(View.VISIBLE);
+            insertEarpiece.setVisibility(View.GONE);
+            explain.setVisibility(View.VISIBLE);
+            start.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    requestPermission();
+                }
+            });
+        }
 
 
     }
@@ -190,7 +208,7 @@ public class TestMicrophone extends AppCompatActivity {
                     explain.setText(getResources().getString(R.string.recorder));
                     recorder.setVisibility(View.VISIBLE);
                     recorder.setText("Amplitude - " + (int) getAmplitude());
-                    if ((int) getAmplitude() < 10000) {
+                    if ((int) getAmplitude() < 1000) {
                         insertEarpiece.setVisibility(View.VISIBLE);
                         recorder.setTextColor(getResources().getColor(R.color.black));
                         insertEarpiece.setText("Input is low, please increase your voice");
@@ -310,10 +328,10 @@ public class TestMicrophone extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(receiver);
         stopRecording();
         handler.removeCallbacks(timerTask);
         handler.removeCallbacks(stopRecordingRunnable);
+        unregisterReceiver(receiver);
     }
 
     public class HeadsetStateReceiver extends BroadcastReceiver {

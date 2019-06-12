@@ -21,6 +21,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -194,7 +195,6 @@ public class DeviceInfoFragment extends Fragment {
         textView.append("Manufacturer:  " + Build.MANUFACTURER + "\n");
         textView.append("SDK:  " + Build.VERSION.SDK + "\n");
         textView.append("Board:  " + Build.BOARD + "\n");
-        textView.append("Brand:  " + Build.BRAND + "\n");
         textView.append("Host:  " + Build.HOST + "\n");
         textView.append("Incremental:  " + Build.VERSION.INCREMENTAL + "\n");
         textView.append("Fingerprint:  " + Build.FINGERPRINT + "\n");
@@ -238,6 +238,7 @@ public class DeviceInfoFragment extends Fragment {
                     break;
             }
             boolean isRoaming = telephonyManager.isNetworkRoaming();
+            phoneState.append("Phone Operator Name:  " + telephonyManager.getNetworkOperatorName() +  "\n");
             phoneState.append("Phone Network Type:  " + phoneTypeString +  "\n");
             phoneState.append("IMEI Number:  " + telephonyManager.getDeviceId() +  "\n");
             phoneState.append("Subscriber ID:  " + telephonyManager.getDeviceId() +  "\n");
@@ -255,20 +256,20 @@ public class DeviceInfoFragment extends Fragment {
         ProgressBar progressBar = view.findViewById(R.id.progressStorage);
         TextView textViewSize = view.findViewById(R.id.size);
         TextView textViewAvailable = view.findViewById(R.id.available);
-        StatFs stat = new StatFs(Environment.getExternalStorageDirectory().getPath());
+        StatFs stat = new StatFs(Environment.getDataDirectory().getPath());
         Long bytesAvailable = stat.getBlockSizeLong() * stat.getAvailableBlocksLong();
         long megAvailable = bytesAvailable;
         textViewAvailable.setText("Avail: " + formatSize(megAvailable));
         textViewSize.setText("Total: " + getTotalInternalMemorySize());
-        progressBar.setMax((int) getTotalInternalMemorySizeInt());
-        progressBar.setProgress((int) getTotalInternalMemorySizeInt() - (int) formatSizeInt(megAvailable));
-
+        long availValue = formatSizeInt(getTotalInternalMemorySizeRaw() - megAvailable);
+        long maxValue = formatSizeInt(getTotalInternalMemorySizeRaw());
+        progressBar.setMax((int)maxValue);
+        progressBar.setProgress((int) availValue);
 
     }
 
 
-
-    public static String getTotalInternalMemorySize() {
+    public static String getTotalInternalMemorySize(){
         File path = Environment.getDataDirectory();
         StatFs stat = new StatFs(path.getPath());
         long BlockSize = stat.getBlockSizeLong();
@@ -276,12 +277,13 @@ public class DeviceInfoFragment extends Fragment {
         return formatSize(TotalBlocks * BlockSize);
     }
 
-    public static long getTotalInternalMemorySizeInt() {
+
+    public static long getTotalInternalMemorySizeRaw() {
         File path = Environment.getDataDirectory();
         StatFs stat = new StatFs(path.getPath());
         long BlockSize = stat.getBlockSizeLong();
         long TotalBlocks = stat.getBlockCountLong();
-        return formatSizeInt(TotalBlocks * BlockSize);
+        return TotalBlocks * BlockSize;
     }
 
 
@@ -301,6 +303,7 @@ public class DeviceInfoFragment extends Fragment {
         }
         return size;
     }
+
 
     public static String formatSize(long size) {
         String suffixSize = null;

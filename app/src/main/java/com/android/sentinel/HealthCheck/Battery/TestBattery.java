@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.sentinel.HealthCheck.Display.TestDimming;
 import com.android.sentinel.HealthCheck.HealthCheck;
@@ -107,7 +108,6 @@ public class TestBattery extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
             int status = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, 0);
             if (status == BatteryManager.BATTERY_HEALTH_COLD) {
                 battHealth.setText("Battery Health - Cold");

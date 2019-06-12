@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
     ProgressBar progressBar;
     HeadsetStateReceiver receiver;
     IntentFilter receiverFilter;
+    AudioManager audioManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,13 +106,25 @@ public class TestHeadphoneJack extends AppCompatActivity {
         handler = new Handler();
         receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         receiver = new HeadsetStateReceiver();
-        registerReceiver( receiver, receiverFilter );
+        registerReceiver(receiver, receiverFilter);
         runProgress();
         timer(20000);
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager.isWiredHeadsetOn()){
+           passAction();
+        }else{
+            warnNoHeadphone();
+        }
+
 
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(timerTask);
+        unregisterReceiver(receiver);
+    }
 
     private void runProgress() {
         Thread thread = new Thread() {
@@ -163,8 +177,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         skip.setVisibility(View.GONE);
         move.setVisibility(View.VISIBLE);
-        handler.removeCallbacks(timerTask);
-        unregisterReceiver(receiver);
+
     }
 
     private void failAction() {
@@ -176,8 +189,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         move.setVisibility(View.VISIBLE);
         skip.setVisibility(View.GONE);
-        unregisterReceiver(receiver);
-        handler.removeCallbacks(timerTask);
+
     }
 
     public class HeadsetStateReceiver extends BroadcastReceiver {
@@ -185,8 +197,7 @@ public class TestHeadphoneJack extends AppCompatActivity {
         @Override
         public void onReceive(final Context context, final Intent intent) {
             String action = intent.getAction();
-            if ((action.equals(Intent.ACTION_HEADSET_PLUG)))
-            {
+            if ((action.equals(Intent.ACTION_HEADSET_PLUG))) {
                 int headSetState = intent.getIntExtra("state", 0);
                 if (headSetState == 0) {
                     warnNoHeadphone();

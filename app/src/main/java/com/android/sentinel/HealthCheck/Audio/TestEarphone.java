@@ -31,6 +31,8 @@ public class TestEarphone extends AppCompatActivity {
     LinearLayout linearLayout, startSkip;
     MediaPlayer mp;
     HeadsetStateReceiver receiver;
+    AudioManager audioManager;
+    IntentFilter receiverFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,14 +92,32 @@ public class TestEarphone extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        /*Increase device volume*/
-        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
-                audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
         mp = MediaPlayer.create(TestEarphone.this, R.raw.audio_playback);
         mp.setLooping(true);
-        IntentFilter receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
+        receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         receiver = new HeadsetStateReceiver();
+        /*Increase device volume*/
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+                audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+
+        if (audioManager.isWiredHeadsetOn()) {
+            start.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startPlay();
+                }
+            });
+
+            insertEarpiece.setVisibility(View.GONE);
+            linearLayout.setVisibility(View.GONE);
+            startSkip.setVisibility(View.VISIBLE);
+            explain.setVisibility(View.VISIBLE);
+            explain.setText(getResources().getString(R.string.earphone_details_dialog));
+            start.setVisibility(View.VISIBLE);
+        } else {
+            warnNoHeadphone();
+        }
         registerReceiver(receiver, receiverFilter);
     }
 
@@ -161,6 +181,7 @@ public class TestEarphone extends AppCompatActivity {
     }
 
     public void passAction(View view) {
+
         setDefaults(EARPHONE, SUCCESS, TestEarphone.this);
         if (getIntent().getExtras() != null) {
             String val = getIntent().getStringExtra(FROM);

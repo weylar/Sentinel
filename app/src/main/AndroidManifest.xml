@@ -271,6 +271,7 @@
             android:label="Flashlight"
             android:screenOrientation="portrait" />
 
+
     </application>
 
 </manifest>

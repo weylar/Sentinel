@@ -12,6 +12,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +23,8 @@ import com.android.sentinel.HealthCheck.Audio.TestSpeaker;
 import com.android.sentinel.HealthCheck.Display.TestDimming;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
+
+import java.io.IOException;
 
 import static com.android.sentinel.HealthCheck.TestFragment.DIMMING;
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
@@ -32,11 +36,13 @@ import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
 
 
-public class TestFlash extends AppCompatActivity {
+public class TestFlash extends AppCompatActivity implements  SurfaceHolder.Callback {
     Context context;
     static Camera cam = null;
     Button pass, fail;
     TextView skip;
+    SurfaceView preview;
+    SurfaceHolder mHolder;
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
 
     @Override
@@ -46,6 +52,8 @@ public class TestFlash extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_test_flash);
         context = TestFlash.this;
+        preview = findViewById(R.id.preview);
+        mHolder = preview.getHolder();
         pass = findViewById(R.id.pass);
         fail = findViewById(R.id.fail);
         skip = findViewById(R.id.skip);
@@ -140,14 +148,16 @@ public class TestFlash extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     try {
                         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+                            mHolder.addCallback(this);
                             cam = Camera.open();
+                            cam.setPreviewDisplay(mHolder);
                             Camera.Parameters p = cam.getParameters();
                             p.setFlashMode(android.hardware.Camera.Parameters.FLASH_MODE_TORCH);
                             cam.setParameters(p);
                             cam.startPreview();
                         } else {
                             Toast.makeText(context, "Phone does not have a flash", Toast.LENGTH_LONG).show();
-                            setDefaults(FLASH, UNCHECKED, context);
+                            setDefaults(FLASH, FAILED, context);
                             if (getIntent().getExtras() != null) {
                                 String val = getIntent().getStringExtra(FROM);
                                 if (val.equals(DIMMING)) {
@@ -195,7 +205,9 @@ public class TestFlash extends AppCompatActivity {
         } else {
             try {
                 if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+                    mHolder.addCallback(this);
                     cam = Camera.open();
+                    cam.setPreviewDisplay(mHolder);
                     Camera.Parameters p = cam.getParameters();
                     p.setFlashMode(android.hardware.Camera.Parameters.FLASH_MODE_TORCH);
                     cam.setParameters(p);
@@ -218,5 +230,26 @@ public class TestFlash extends AppCompatActivity {
                 Log.e("Error", "" + e);
             }
         }
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        mHolder = surfaceHolder;
+        try {
+            cam.setPreviewDisplay(mHolder);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        mHolder = null;
+
     }
 }

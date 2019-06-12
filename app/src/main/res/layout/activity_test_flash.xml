@@ -125,5 +125,10 @@
 
     </LinearLayout>
 
-
+    <SurfaceView
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/preview"
+        android:layout_width="1dp"
+        android:layout_height="1dp" />
 </RelativeLayout>

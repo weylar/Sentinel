@@ -35,6 +35,7 @@ public class TestReceiver extends AppCompatActivity {
     LinearLayout pass_fail, skip_start;
     MediaPlayer mp;
     HeadsetStateReceiver receiver;
+    AudioManager audioManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,21 @@ public class TestReceiver extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mp = new MediaPlayer();
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager.isWiredHeadsetOn()){
+            warnRemoveHeadphone();
+        }else{
+            insertEarpiece.setVisibility(View.GONE);
+            explain.setVisibility(View.VISIBLE);
+            explain.setText(getResources().getString(R.string.earphone_details_dialog));
+            start.setVisibility(View.VISIBLE);
+            start.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startPlayback();
+                }
+            });
+        }
         IntentFilter receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         receiver = new HeadsetStateReceiver();
         registerReceiver(receiver, receiverFilter);
@@ -118,6 +134,7 @@ public class TestReceiver extends AppCompatActivity {
     }
 
     public void failAction(View view) {
+
         setDefaults(RECEIVER, FAILED, TestReceiver.this);
         if (getIntent().getExtras() != null) {
             String val = getIntent().getStringExtra(FROM);

@@ -8,13 +8,11 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
@@ -28,13 +26,13 @@ import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.setDefaults;
 
 public class TestSpeaker extends AppCompatActivity {
-    private static final String TAG = "tag";
     TextView insertEarpiece, explain;
     Button start, skip;
     LinearLayout pass_fail, skip_start;
     MediaPlayer mp;
     HeadsetStateReceiver receiver;
     IntentFilter receiverFilter;
+    AudioManager audioManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +88,21 @@ public class TestSpeaker extends AppCompatActivity {
         super.onResume();
         mp = MediaPlayer.create(TestSpeaker.this, R.raw.audio_playback);
         mp.setLooping(true);
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (audioManager.isWiredHeadsetOn()){
+            warnRemoveHeadphone();
+       }else{
+            start.setVisibility(View.VISIBLE);
+            explain.setVisibility(View.VISIBLE);
+            insertEarpiece.setVisibility(View.GONE);
+            explain.setText(getResources().getString(R.string.earphone_details_dialog));
+            start.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startPlayback();
+                }
+            });
+        }
         receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         receiver = new HeadsetStateReceiver();
         registerReceiver(receiver, receiverFilter);
@@ -146,6 +159,7 @@ public class TestSpeaker extends AppCompatActivity {
     }
 
     public void failAction(View view) {
+
         setDefaults(SPEAKER, FAILED, TestSpeaker.this);
         if (getIntent().getExtras() != null) {
             String val = getIntent().getStringExtra(FROM);
@@ -160,12 +174,15 @@ public class TestSpeaker extends AppCompatActivity {
     }
 
     public class HeadsetStateReceiver extends BroadcastReceiver {
+
         @Override
         public void onReceive(final Context context, final Intent intent) {
+
             String action = intent.getAction();
             if ((action.equals(Intent.ACTION_HEADSET_PLUG))) {
                 int headSetState = intent.getIntExtra("state", 0);
                 if (headSetState == 0) {
+
                     start.setVisibility(View.VISIBLE);
                     explain.setVisibility(View.VISIBLE);
                     insertEarpiece.setVisibility(View.GONE);
@@ -173,12 +190,11 @@ public class TestSpeaker extends AppCompatActivity {
                     start.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-
                             startPlayback();
                         }
                     });
                 } else {
+
                     warnRemoveHeadphone();
 
 
