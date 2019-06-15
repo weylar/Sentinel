@@ -40,6 +40,8 @@ import com.android.sentinel.HealthCheck.Sensor.TestFingerPrint;
 import com.android.sentinel.HealthCheck.Sensor.TestSensor;
 import com.android.sentinel.HealthResult;
 import com.android.sentinel.R;
+import com.android.sentinel.TestBack;
+import com.android.sentinel.TestRecent;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -83,6 +85,8 @@ public class TestFragment extends Fragment {
     public static final String CHARGING = "charging";
     public static final String SPEAKER = "speaker";
     public static final String RECEIVER = "receiver";
+    public static final String BACK = "back";
+    public static final String RECENT = "recent";
     /*====================================================================*/
     public static final int REQUEST_IMAGE_CAPTURE = 1;
     public static final String FROM = "from";
@@ -170,7 +174,9 @@ public class TestFragment extends Fragment {
                 getDefaults(TOUCHSCREEN, getActivity()),
                 getDefaults(DISPLAY, getActivity()),
                 getDefaults(BLUETOOTH, getActivity()),
-                getDefaults(WIFI, getActivity())
+                getDefaults(WIFI, getActivity()),
+                getDefaults(BACK, getActivity()),
+                getDefaults(RECENT, getActivity())
         };
 
         return result;
@@ -220,6 +226,12 @@ public class TestFragment extends Fragment {
                         startActivity(intentVolume);
                     } else if (childPosition == 2) {
                         Intent intentPower = new Intent(getActivity(), TestPower.class);
+                        startActivity(intentPower);
+                    }else if (childPosition == 3) {
+                        Intent intentPower = new Intent(getActivity(), TestBack.class);
+                        startActivity(intentPower);
+                    }else if (childPosition == 4) {
+                        Intent intentPower = new Intent(getActivity(), TestRecent.class);
                         startActivity(intentPower);
                     }
                 } else if (groupPosition == 3) {
@@ -324,7 +336,7 @@ public class TestFragment extends Fragment {
         groupButton = new ArrayList<>();
         groupButton.add("Buttons");
         groupButton.add("Buttons and Controls");
-        groupButton.add("3 tests");
+        groupButton.add("5 tests");
 
 
         groupSensor = new ArrayList<>();
@@ -465,9 +477,19 @@ public class TestFragment extends Fragment {
         extraPower.add(R.drawable.power_50px);
         extraPower.add(getDefaults(POWER, getActivity()));
 
+        List<Integer> extraBack = new ArrayList<>();
+        extraBack.add(R.drawable.back_50px);
+        extraBack.add(getDefaults(BACK, getActivity()));
+
+        List<Integer> extraRecent = new ArrayList<>();
+        extraRecent.add(R.drawable.tab_50px);
+        extraRecent.add(getDefaults(RECENT, getActivity()));
+
         childButtons.put("Home Button", extraHome);
         childButtons.put("Volume Control", extraVolume);
         childButtons.put("Power Button", extraPower);
+        childButtons.put("Back Button", extraBack);
+        childButtons.put("Task Manager Button", extraRecent);
 
 
         LinkedHashMap<String, List<Integer>> childSensor = new LinkedHashMap<>();

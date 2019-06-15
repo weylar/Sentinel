@@ -90,7 +90,11 @@
     <string name="volume_up_pressed">Volume Up pressed</string>
     <string name="volume_down_pressed">Volume down pressed</string>
     <string name="power_dialog">Test that the power button is functional.</string>
+    <string name="back_dialog">Test that the back button is functional.</string>
+    <string name="recent_dialog">Test that the task manager button is functional.</string>
     <string name="power_dialog_detail">Press the power button, the screen will go off, press again to turn it on.</string>
+    <string name="back_dialog_detail">Press the back button.</string>
+    <string name="recent_dialog_detail">Press the task manager button, then navigate back to validate result.</string>
     <string name="front_cam_dialog">Tests that the front camera is functional.</string>
     <string name="back_cam_dialog">Tests that the back camera is functional.</string>
     <string name="front_cam_dialog_details">Test the front camera. You will be redirected to take a picture, if you see what you snap, tap on pass, otherwise tap fail.</string>

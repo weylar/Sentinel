@@ -23,12 +23,11 @@
         android:name="android.hardware.camera"
         android:required="true" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <permission
         android:name="android.permission.FLASHLIGHT"
         android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"
         android:protectionLevel="normal" />
-
-
 
     <application
         android:allowBackup="true"
@@ -38,8 +37,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".HealthResult"
+        <activity android:name=".TestRecent"
+            android:configChanges="orientation"
+            android:label="Task Manager Button"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TestBack"
+            android:configChanges="orientation"
+            android:label="Back Button"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".HealthResult"
             android:label="Device Health Result"
             android:parentActivityName=".Home"
             android:screenOrientation="portrait" />
@@ -115,10 +122,10 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".HealthCheck.Audio.TestMicrophone"
             android:configChanges="orientation"
@@ -270,8 +277,6 @@
             android:configChanges="orientation"
             android:label="Flashlight"
             android:screenOrientation="portrait" />
-
-
     </application>
 
 </manifest>

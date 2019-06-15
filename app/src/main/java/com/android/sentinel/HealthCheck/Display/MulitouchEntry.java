@@ -15,6 +15,7 @@ import com.android.sentinel.R;
 import static com.android.sentinel.HealthCheck.TestFragment.FROM;
 import static com.android.sentinel.HealthCheck.TestFragment.HOME;
 import static com.android.sentinel.HealthCheck.TestFragment.MULTITOUCH;
+import static com.android.sentinel.HealthCheck.TestFragment.RECENT;
 import static com.android.sentinel.HealthCheck.TestFragment.UNCHECKED;
 import static com.android.sentinel.HealthCheck.TestFragment.VOLUME;
 import static com.android.sentinel.HealthCheck.TestFragment.getDefaults;
@@ -98,9 +99,9 @@ public class MulitouchEntry extends AppCompatActivity {
                 public void onClick(View view) {
                     if (getIntent().getExtras() != null) {
                         String val = getIntent().getStringExtra(FROM);
-                        if (val.equals(VOLUME)) {
+                        if (val.equals(RECENT)) {
                             Intent intent = new Intent(MulitouchEntry.this, TestMultitouch.class);
-                            intent.putExtra(FROM, VOLUME);
+                            intent.putExtra(FROM, MULTITOUCH);
                             startActivity(intent);
                         }
                     }else {
@@ -117,7 +118,7 @@ public class MulitouchEntry extends AppCompatActivity {
                     setDefaults(MULTITOUCH, UNCHECKED, MulitouchEntry.this);
                     if (getIntent().getExtras() != null) {
                         String val = getIntent().getStringExtra(FROM);
-                        if (val.equals(VOLUME)) {
+                        if (val.equals(RECENT)) {
                             Intent intent = new Intent(MulitouchEntry.this,
                                     TouchscreenEntry.class);
                             intent.putExtra(FROM, MULTITOUCH);
@@ -168,7 +169,7 @@ public class MulitouchEntry extends AppCompatActivity {
             public void onClick(View view) {
                 if (getIntent().getStringExtra(FROM) != null) {
                     String val = getIntent().getStringExtra(FROM);
-                    if (val.equals(VOLUME)) {
+                    if (val.equals(RECENT)) {
                         Intent intent = new Intent(MulitouchEntry.this,
                                 TouchscreenEntry.class);
                         intent.putExtra(FROM, MULTITOUCH);

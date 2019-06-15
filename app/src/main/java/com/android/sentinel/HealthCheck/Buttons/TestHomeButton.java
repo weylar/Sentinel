@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
@@ -62,6 +63,24 @@ public class TestHomeButton extends AppCompatActivity {
             }
         });
 
+        handler = new Handler();
+        runProgress();
+        timer(10000);
+        mHomeWatcher = new HomeWatcher(this);
+        mHomeWatcher.setOnHomePressedListener(new OnHomePressedListener() {
+            @Override
+            public void onHomePressed() {
+                setPass();
+            }
+
+            @Override
+            public void onHomeLongPressed() {
+                setPass();
+            }
+        });
+
+        mHomeWatcher.startWatch();
+
     }
 
     @Override
@@ -81,8 +100,6 @@ public class TestHomeButton extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         setDefaults(HOME, UNCHECKED, this);
-
-
     }
 
     private void timer(long delayMillis) {
@@ -96,27 +113,6 @@ public class TestHomeButton extends AppCompatActivity {
         handler.postDelayed(timerTask, delayMillis);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        handler = new Handler();
-        runProgress();
-        timer(10000);
-        mHomeWatcher = new HomeWatcher(this);
-        mHomeWatcher.setOnHomePressedListener(new OnHomePressedListener() {
-            @Override
-            public void onHomePressed() {
-                setPass();
-            }
-
-            @Override
-            public void onHomeLongPressed() {
-                setPass();
-            }
-        });
-
-        mHomeWatcher.startWatch();
-    }
 
     private void runProgress() {
         thread = new Thread(){
