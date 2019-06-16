@@ -141,5 +141,6 @@
     <string name="what_type_of_test_do_you_want_to_run">What type of test do you want to run?</string>
     <string name="go_to_settings">GO TO SETTINGS</string>
     <string name="powered_by_sentinel">Powered by Sentinel</string>
+    <string name="warn_increase_voice">Input is low, please increase your voice</string>
 
 </resources>
