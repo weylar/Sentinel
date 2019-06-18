@@ -6,13 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +27,11 @@ import android.widget.Toast;
 import com.android.sentinel.HealthCheck.Buttons.TestPower;
 import com.android.sentinel.HealthCheck.HealthCheck;
 import com.android.sentinel.R;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static com.android.sentinel.HealthCheck.TestFragment.FAILED;
 import static com.android.sentinel.HealthCheck.TestFragment.FROM;
@@ -43,6 +51,7 @@ public class PrimaryCamEntry extends AppCompatActivity {
     LinearLayout responseKeys;
     Intent takePictureIntent;
     CardView cardView;
+    String currenPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,18 +112,34 @@ public class PrimaryCamEntry extends AppCompatActivity {
         setDefaults(PRIMARY_CAMERA, UNCHECKED, this);
     }
 
+    private File createImageFile() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = " JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try {
+            image = File.createTempFile(imageFileName, ".jpg", storageDir);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        currenPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            Bitmap bitmap = BitmapFactory.decodeFile(currenPhotoPath);
+            imageView.setImageBitmap(bitmap);
+            imageView.setVisibility(View.VISIBLE);
             responseKeys.setVisibility(View.VISIBLE);
             skip.setVisibility(View.GONE);
             explanation.setVisibility(View.GONE);
             btn.setVisibility(View.GONE);
             cardView.setVisibility(View.GONE);
-            imageView.setVisibility(View.VISIBLE);
-            imageView.setImageBitmap(imageBitmap);
+
             pass.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -172,7 +197,7 @@ public class PrimaryCamEntry extends AppCompatActivity {
             case MY_PERMISSIONS_REQUEST_CAMERA: {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                    startCam();
                 } else {
                     Toast.makeText(context, "Permission was denied ", Toast.LENGTH_SHORT).show();
                     if (getIntent().getExtras() != null) {
@@ -193,20 +218,33 @@ public class PrimaryCamEntry extends AppCompatActivity {
     }
 
     private void dispatchTakePictureIntent() {
-        takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
         } else {
-            try {
-                if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            startCam();
+        }
+    }
+
+    private void startCam() {
+        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                File photoFile;
+                photoFile = createImageFile();
+                if (photoFile != null) {
+                    Uri photoUri = FileProvider.getUriForFile(this, "com.android.sentinel.fileprovider",
+                            photoFile);
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                }
+
                 } else {
                     Toast.makeText(context, "Phone does not have a camera", Toast.LENGTH_LONG).show();
                 }
-            } catch (Exception e) {
-                Log.e("Error", "" + e);
             }
-        }
+
+
     }
 
 }
